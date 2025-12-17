@@ -1,0 +1,2992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kumbh+Sans:wght@100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="src/style.css">
+  <link rel="stylesheet" href="src/mainstyle.css">
+  <link rel="stylesheet" href="src/date.css">
+  <link rel="stylesheet" href="src/highlights.css">
+
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
+<script src="https://skillbook-widget-omega.vercel.app/Schedule.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  .consultant-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .consultant-popup-overlay.active {
+    display: flex;
+  }
+
+  .consultant-popup {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .consultant-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+
+  .consultant-popup-close:hover {
+    background-color: #f0f0f0;
+  }
+
+  .consultant-popup h2 {
+    margin-top: 0;
+    margin-bottom: 40px;
+    color: #333;
+    text-align: center;
+  }
+
+  .consultant-form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .consultant-form-group {
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .consultant-form-row .consultant-form-group {
+    margin-bottom: 0;
+  }
+
+  .consultant-form-group.full-width {
+    flex: 0 0 100%;
+  }
+
+  .consultant-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .consultant-form-group input,
+  .consultant-form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .consultant-form-group input:focus,
+  .consultant-form-group textarea:focus {
+    border: 1px solid #ddd;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .consultant-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .consultant-form-submit {
+    background-color: #FD464A;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    /* width: 100%; */
+    transition: background-color 0.3s;
+    text-align: center;
+    margin: auto;
+  }
+
+  .consultant-form-submit:hover {
+    background-color: #e6393f;
+  }
+
+  .consultant-form-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .consultant-form-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+  }
+
+  .consultant-form-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+  }
+
+  .consultant-form-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+  }
+</style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- hero section - top navbar  -->
+
+    <section class="top-navbar-section-first">
+      <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1_19967d95a7.svg" alt="">
+
+      <button id="consultantBtn">
+        <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_53_bb48dfb5a2.svg" alt="">
+        Talk to our learning consultant
+      </button>
+    </section>
+
+    <section class="top-navbar-section-second">
+      <div class="top-navbar-section-second-container">
+        <div class="top-navbar-second-avatar">
+          <img src=""
+            alt="">
+        </div>
+
+        <div class="top-navbar-second-desc-wrapper">
+          <p class="top-navbar-second-desc collapsed" id="testimonialText">
+            <!-- Content will be populated from array -->
+          </p>
+        </div>
+
+        <div class="top-navbar-second-readmore-wrapper">
+          <span class="top-navbar-second-readmore-icon">
+            <img src=""
+              alt="Platform">
+          </span>
+          <a href="javascript:void(0);" class="top-navbar-second-readmore" id="readMoreBtn">
+            <span class="top-navbar-second-readmore-text" id="readMoreText">Read More</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="vi-course-main-spc-google-con">
+
+      <div class="vi-course-main-wrapper">
+    <!-- video section -->
+    <div class="video-player">
+      <div class="video-placeholder">
+        <video id="heroVideo" preload="metadata"
+          poster="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/ASAI_1_0a5b44e2ab.gif"
+          controlslist="nodownload">
+          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <button class="play-button" id="heroVideoPlay" aria-label="Play video">
+          <span>▶</span>
+        </button>
+        <button class="pause-button" id="heroVideoPause" aria-label="Pause video" style="display: none;">
+          <span>⏸</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- courses-section -->
+
+    <section class="course-display-google-landing">
+      <div class="course-display-l-flex">
+        <div class="course-display-tag-wrapper">
+        <div class="course-display-tag">
+          <img class="course-display-tag-image" src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1448_cc4da54fe7.svg" alt="">
+          <p>Scaled agile SPCT platinum partner</p>
+        </div>
+        <img class="course-display-tag-2-image" src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1449_fed70a0001.svg" alt="">
+        </div>
+
+        <div class="course-display-tag-2">
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1449_fed70a0001.svg" alt="">
+          <p>Implementing SAFe® Training with SAFe® Practice Consultant (SPC) 6.0 Certification</p>
+        </div>
+
+        <div class="what-participants-say-about-you-content-wrapper-learner-views course-display-tag-3">
+          <div class="what-participants-say-about-you-content-wrapper-learner-views-google">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1452_c026f73874.svg"
+              alt="Google" class="what-participants-say-about-you-content-wrapper-learner-views-google-icon">
+            <span class="what-participants-say-about-you-content-wrapper-learner-views-google-text">4.98/5</span>
+          </div>
+
+          <div class="what-participants-say-about-you-content-wrapper-learner-views-google">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1455_1_7d2b9e8db1.svg"
+              alt="Google" class="what-participants-say-about-you-content-wrapper-learner-views-google-icon">
+            <span class="what-participants-say-about-you-content-wrapper-learner-views-google-text">50000 + Learner
+              reviews</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="course-display-2-flex">
+        <div class="next-session-card" id="nextSessionCard" style="display: none;">
+          <div class="ns-header">NEXT UPCOMING SESSION</div>
+          <div class="ns-body">
+            <div class="ns-date">
+              <div class="ns-month">AUG</div>
+              <div class="ns-day-wrap">
+                <div class="ns-days">24-25</div>
+                <div class="ns-week">Sat - Sun</div>
+              </div>
+            </div>
+
+            <div class="ns-info">
+              <div class="ns-time"></div>
+              <div class="ns-trainers">
+                <div class="ns-trainer">
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/a_dp_of_random_person_58fdc93ec2.svg"
+                    alt="" />
+                  <span>Harry Narang</span>
+                </div>
+                <div class="ns-trainer">
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/a_dp_of_random_person_1_ffda3f1bd7.svg"
+                    alt="" />
+                  <span>Joe Callahan</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="ns-actions">
+            <button class="ns-btn ns-btn-primary">
+              Register
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">
+            </button>
+            <button class="ns-btn ns-btn-ghost" onclick="scrollToCourseShow()">
+              View all dates
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Layer_93_6da3d19c24.svg" alt="">
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+
+  <div id="course-schedule" class="showing-spc-highlights-widget-main-courses" style="display: none;">
+
+  </div>
+
+  </div>
+
+  <!-- Floating Date Widget Container (sticky bottom when main section is out of view) -->
+  <div class="spc-date-widget-main-course-floating-container-sec-main-wrapper">
+    <div class="spc-date-widget-main-course-floating-container-sec" style="display: none;">
+      <div class="fsc-header">SELECTED DATE</div>
+      <div class="fsc-body">
+        <div class="fsc-date">
+          <div class="fsc-month"></div>
+          <div class="fsc-day-wrap">
+            <div class="fsc-days"></div>
+            <div class="fsc-week"></div>
+          </div>
+        </div>
+
+        <div class="fsc-info">
+          <div class="fsc-time-wrapper">
+            <div class="fsc-time"></div>
+            <div class="fsc-duration"></div>
+          </div>
+          <div class="fsc-trainers"></div>
+        </div>
+      </div>
+
+      <div class="fsc-actions">
+        <a href="#" class="fsc-btn-link">
+          <button class="fsc-btn fsc-btn-primary">
+            Register
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">
+          </button>
+        </a>
+        <a href="#courseShow" class="fsc-btn-link">
+          <button class="fsc-btn fsc-btn-ghost">
+            View all dates
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Layer_93_6da3d19c24.svg" alt="">
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!-- mobile google video section -->
+    <section class="mobile-google-video-section">
+      <div class="mobile-google-video-container">
+        <!-- Left: Instructor Profile -->
+        <div class="mobile-google-video-profile">
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_22_93ae478107.svg" 
+            alt="Instructor" class="mobile-google-video-profile-image">
+        </div>
+        
+        <!-- Center: Video Play Button -->
+        <div class="mobile-google-video-play-area">
+          <div class="mobile-google-video-player-wrapper">
+            <video id="mobileGoogleVideo" preload="metadata" class="mobile-google-video-element">
+              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <button class="mobile-google-video-play-btn" id="mobileGoogleVideoPlay">
+              <span class="mobile-google-video-play-icon">▶</span>
+            </button>
+            <p class="mobile-google-video-play-text">Watch Intro Video</p>
+          </div>
+        </div>
+        
+        <!-- Right: Google Rating Only -->
+        <div class="mobile-google-video-ratings">
+          <div class="mobile-google-video-rating-item">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1452_1_af942af7fe.svg" 
+              alt="Google" class="mobile-google-video-rating-icon">
+            <span class="mobile-google-video-rating-text">4.98/5</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- mobile google landing dates  -->
+    <div class="mobile-session-sentinel" id="mobileSessionSentinel"></div>
+    <section class="mobile-tablet-session-section" id="mobileSessionSection">
+      <div class="mobile-session-wrapper">
+        <!-- Header Section (Purple) - Shared -->
+        <div class="mobile-session-header">
+          <button class="mobile-session-toggle-btn" id="toggleBtn" aria-label="Toggle">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484253_764ae57214.svg" alt="Toggle" class="mobile-session-toggle-icon">
+          </button>
+          <div class="mobile-session-header-info">
+            <span class="mobile-session-header-label">NEXT UPCOMING SESSION</span>
+            <span class="mobile-session-header-date">23 AUG - 25 AUG</span>
+          </div>
+          <a href="tel:+1234567890" class="mobile-session-call-btn" aria-label="Call">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_597177_445c117206.svg" alt="Call" class="mobile-session-call-icon">
+          </a>
+        </div>
+
+        <!-- Detailed Session Info Section (Light Green/Mint) - Toggleable -->
+        <div class="mobile-session-details" id="sessionDetails">
+          <div class="mobile-session-date-block">
+            <div class="mobile-session-date-month">AUG</div>
+            <div class="mobile-session-date-days">24-25</div>
+            <div class="mobile-session-date-weekdays">Sat - Sun</div>
+          </div>
+          <div class="mobile-session-info-content">
+            <div class="mobile-session-time-duration">
+              <span class="mobile-session-time">9:00AM - 5:30PM EST</span>
+              <span class="mobile-session-dot"></span>
+              <span class="mobile-session-duration">2 Days</span>
+            </div>
+            <div class="mobile-session-instructors">
+              <div class="mobile-session-avatar">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/a_dp_of_random_person_2_c88ba20180.svg" alt="Harry Narang" class="mobile-session-avatar-img">
+              </div>
+              <div class="mobile-session-avatar mobile-session-avatar-2">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/a_dp_of_random_person_2_c88ba20180.svg" alt="Joe Callahan" class="mobile-session-avatar-img">
+              </div>
+              <span class="mobile-session-instructor-names">Harry Narang & Joe Callahan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Section (Red) - Shared -->
+        <div class="mobile-session-footer">
+          <button class="mobile-session-register-btn">
+            <span>Register</span>
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="Arrow" class="mobile-session-arrow-icon">
+          </button>
+          <div class="mobile-session-footer-divider"></div>
+          <button class="mobile-session-view-dates-btn" onclick="scrollToCourseShow()">View Other Dates</button>
+        </div>
+      </div>
+    </section>
+
+     <!-- Floating Date Widget for Mobile/Tablet (when classid is present) -->
+  <div class="widget-ffc-floating-section-1-main-wrapper" style="display: none;">
+    <div class="widget-ffc-floating-section-1-container">
+      <!-- Top Section (Light Beige/White) -->
+      <div class="widget-ffc-floating-section-1-top">
+        <button class="widget-ffc-floating-section-1-toggle-btn" aria-label="Toggle">
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484253_764ae57214.svg" alt="Toggle" class="widget-ffc-floating-section-1-toggle-icon">
+        </button>
+        <a href="tel:+1234567890" class="widget-ffc-floating-section-1-call-btn" aria-label="Call">
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_597177_445c117206.svg" alt="Call" class="widget-ffc-floating-section-1-call-icon">
+        </a>
+      </div>
+
+      <!-- Middle Section (Purple) -->
+      <div class="widget-ffc-floating-section-1-middle">
+        <span class="widget-ffc-floating-section-1-label">SELECTED DATE</span>
+        <span class="widget-ffc-floating-section-1-date"></span>
+      </div>
+
+      <!-- Expanded Content Section (Light Green/Mint) - Toggleable -->
+      <div class="widget-ffc-floating-section-1-expanded" id="widgetFfcExpanded" style="display: none;">
+        <!-- DateBox content will be rendered here -->
+      </div>
+
+      <!-- Bottom Section (Red) -->
+      <div class="widget-ffc-floating-section-1-bottom">
+        <button class="widget-ffc-floating-section-1-register-btn">
+          <span>Register</span>
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="Arrow" class="widget-ffc-floating-section-1-arrow-icon">
+        </button>
+        <div class="widget-ffc-floating-section-1-divider"></div>
+        <button class="widget-ffc-floating-section-1-view-dates-btn" onclick="scrollToCourseShow()">View Other Dates</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- company marquee section -->
+    <section class="company-marquee-section">
+      <div class="company-marquee-container">
+        <h2 class="company-marquee-title">
+          Join the <span class="company-marquee-highlight">3,800+</span> companies growing with us
+        </h2>
+
+        <div class="company-marquee-wrapper">
+          <div class="company-marquee-track">
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1462_4eaaa811a2.svg"
+                alt="Mphasis" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1458_520425f3bc.svg"
+                alt="Schneider Electric" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_5b831b5f1e.svg"
+                alt="Coca-Cola" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1460_c27505f584.svg"
+                alt="Shell" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1461_a65459a90f.svg"
+                alt="Siemens" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1454_849f24930f.svg"
+                alt="TCS" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1455_6f71db35d9.svg"
+                alt="Infosys" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1456_df09175287.svg"
+                alt="Amazon" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1462_4eaaa811a2.svg"
+                alt="Accenture" class="company-marquee-logo">
+            </div>
+
+            <!-- Duplicate for seamless loop -->
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1458_520425f3bc.svg"
+                alt="Schneider Electric" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_5b831b5f1e.svg"
+                alt="Coca-Cola" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1460_c27505f584.svg"
+                alt="Shell" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1461_a65459a90f.svg"
+                alt="Siemens" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1454_849f24930f.svg"
+                alt="TCS" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1455_6f71db35d9.svg"
+                alt="Infosys" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1456_df09175287.svg"
+                alt="Amazon" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1462_4eaaa811a2.svg"
+                alt="Mphasis" class="company-marquee-logo">
+            </div>
+            <div class="company-marquee-item">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1462_4eaaa811a2.svg"
+                alt="Accenture" class="company-marquee-logo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- overview section navbar-->
+
+    <section class="overview-section-navbar">
+      <div class="overview-section-navbar-container">
+        <nav class="overview-sec-skill-nav">
+          <ul class="overview-sec-skill-nav-list">
+            <li class="is-active"><a href="#overview">Overview</a></li>
+            <li><a href="#courseShow">Course Schedule</a></li>
+            <li><a href="#get-certified">Get Certified</a></li>
+            <li><a href="#exam-details">Exam Details</a></li>
+            <li><a href="#learning">Learning</a></li>
+            <li><a href="#curriculum">Curriculum</a></li>
+            <li><a href="#why-skillbook">Why Skillbook</a></li>
+            <li><a href="#instructors">Instructors</a></li>
+            <li><a href="#faqs">FAQs</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="overview-sec-skill">
+      <div class="overview-sec-skill-container">
+        <div class="overview-sec-skill-head">
+          <span class="overview-sec-skill-label">Overview</span>
+          <h2 class="overview-sec-skill-title">Course Summary</h2>
+          <p class="overview-sec-skill-desc">
+            The SAFe® Practice Consultant (SPC 6.0) certification delivers a learning experience that is both inspiring and deeply practical. Through hands-on simulations, roleplays, and real-world case studies, you’ll learn how to apply the SAFe® framework with confidence and precision. By the end of the program, you’ll be equipped to lead enterprise-level Agile transformation and drive measurable outcomes that advance your organization and your career.
+
+          </p>
+        </div>
+
+        <!-- Desktop Grid Layout -->
+        <div class="overview-sec-skill-grid">
+          <!-- salary distribution card -->
+          <div class="overview-sec-skill-card">
+            <div class="oss-salary oss-center">
+              <div class="oss-salary-scale">
+                <span>$120k</span>
+                <span class="oss-salary-avg">$138k</span>
+                <span>$450k</span>
+              </div>
+              <div class="oss-salary-chart">
+                <div class="oss-salary-bars">
+                  <div class="bar h-28"></div>
+                  <div class="bar h-46"></div>
+                  <div class="bar is-active h-88"></div>
+                  <div class="bar h-40"></div>
+                  <div class="bar h-46"></div>
+                </div>
+                <div class="oss-salary-minmax">
+                  <span>Min</span>
+                  <span>Avg</span>
+                  <span>Max</span>
+                </div>
+              </div>
+              <div class="oss-salary-foot">$198k Average salary per year</div>
+            </div>
+          </div>
+
+          <!-- testimonial 1 -->
+          <div class="overview-sec-skill-card">
+            <div class="oss-testimonial">
+              <h4>Amazing course experience!</h4>
+              <p>Our instructor did a fantastic job in the Leading SAFe certification program. It did not even seem to matter that it had to be a virtual class because of the current crisis. The class was very engaging and it was clear from minute 1 that we had a highly competent teacher in our midst. Those two days flew by and there was not a single time that any of us in that class was restless. He has us fully engaged and truly learning. I feel very fortunate to have been in that class. Many thanks also to Skillbook Academy for being so responsive and patient with all my concerns prior to the class.</p>
+              <button class="oss-read-more">Read More</button>
+              <div class="oss-author">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                  alt="author">
+                <span>Jackie Duerr</span>
+                <span class="oss-rating">⭐ 5/5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- expected salary growth -->
+          <div class="overview-sec-skill-card">
+            <div class="oss-growth">
+              <div class="oss-growth-canvas">
+                <svg class="oss-growth-svg" viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <!-- horizontal fade so ends look thinner -->
+                    <linearGradient id="ogFade" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="black" stop-opacity="0" />
+                      <stop offset="12%" stop-color="white" stop-opacity="1" />
+                      <stop offset="88%" stop-color="white" stop-opacity="1" />
+                      <stop offset="100%" stop-color="black" stop-opacity="0" />
+                    </linearGradient>
+                    <mask id="thinEnds" maskUnits="objectBoundingBox">
+                      <rect x="0" y="0" width="600" height="160" fill="url(#ogFade)" />
+                    </mask>
+                  </defs>
+                  <!-- track is hidden to user per request -->
+                  <path class="og-bg" d="M0 138 C 140 70, 280 155, 410 120 C 500 88, 560 35, 600 -5" />
+                  <!-- animated red curve on top -->
+                  <path class="og-red" mask="url(#thinEnds)"
+                    d="M0 138 C 140 70, 280 155, 410 120 C 500 88, 560 35, 600 -5" />
+                </svg>
+                <div class="og-pill">15%</div>
+                <div class="og-bubble"><span>30%</span></div>
+              </div>
+              <div class="oss-growth-foot">Expected salary growth of 30%</div>
+            </div>
+          </div>
+
+          <!-- logos card with dual marquee -->
+          <div class="overview-sec-skill-card logos-card">
+            <div class="oss-logos-marquee">
+              <div class="oss-logos-track up">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                  alt="logo">
+                <!-- duplicate for seamless loop -->
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                  alt="logo">
+              </div>
+              <div class="oss-logos-track down">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                  alt="logo">
+                <!-- duplicate for seamless loop -->
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                  alt="logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                  alt="logo">
+              </div>
+            </div>
+            <div class="oss-logos-foot">"Global 2000" Enterprises Hiring</div>
+          </div>
+
+          <!-- testimonial 5 -->
+          <div class="overview-sec-skill-card">
+            <div class="oss-testimonial">
+              <h4>Amazing course experience!</h4>
+              <p>I had preconceived ideas about Scrum but wanted to learn more. WOW I had no idea how much Scrum/Agile philosophy meshes with my normal leadership style. I'm excited about the future leading and advocating for true Scrum environments. Amazing experience all around and I highly recommend it for anyone looking to become a Scrum Master or just looking for more information.</p>
+              <button class="oss-read-more">Read More</button>
+              <div class="oss-author">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                  alt="author">
+                <span>Baumer Tom</span>
+                <span class="oss-rating">⭐ 5/5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- job roles stack refined -->
+          <div class="overview-sec-skill-card">
+            <div class="oss-roles-v2">
+              <div class="oss-chip main"> <img clas="icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                Sr. Program/Product Manager</div>
+              <div class="oss-chip sub one"><img class="icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                Solution Lead</div>
+              <div class="oss-chip sub two"><img class="icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                Agile Coach</div>
+              <div class="oss-chip sub three"><img class="icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                SAFe RTE</div>
+              <div class="oss-roles-foot">Top Job Roles</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tablet/Phone Carousel Layout -->
+        <div class="overview-sec-skill-carousel-wrapper">
+          <div class="overview-sec-skill-carousel-track">
+            <!-- salary distribution card -->
+            <div class="overview-sec-skill-card">
+              <div class="oss-salary oss-center">
+                <div class="oss-salary-scale">
+                  <span>$120k</span>
+                  <span class="oss-salary-avg">$138k</span>
+                  <span>$450k</span>
+                </div>
+                <div class="oss-salary-chart">
+                  <div class="oss-salary-bars">
+                    <div class="bar h-28"></div>
+                    <div class="bar h-46"></div>
+                    <div class="bar is-active h-88"></div>
+                    <div class="bar h-40"></div>
+                    <div class="bar h-46"></div>
+                  </div>
+                  <div class="oss-salary-minmax">
+                    <span>Min</span>
+                    <span>Avg</span>
+                    <span>Max</span>
+                  </div>
+                </div>
+                <div class="oss-salary-foot">$198k Average salary per year</div>
+              </div>
+            </div>
+
+            <!-- testimonial 1 -->
+            <div class="overview-sec-skill-card">
+              <div class="oss-testimonial">
+                <h4>Amazing course experience!</h4>
+                <p>Our instructor did a fantastic job in the Leading SAFe certification program. It did not even seem to matter that it had to be a virtual class because of the current crisis. The class was very engaging and it was clear from minute 1 that we had a highly competent teacher in our midst. Those two days flew by and there was not a single time that any of us in that class was restless. He has us fully engaged and truly learning. I feel very fortunate to have been in that class. Many thanks also to Skillbook Academy for being so responsive and patient with all my concerns prior to the class.</p>
+                <button class="oss-read-more">Read More</button>
+                <div class="oss-author">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                    alt="author">
+                  <span>Jackie Duerr</span>
+                  <span class="oss-rating">⭐ 5/5</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- expected salary growth -->
+            <div class="overview-sec-skill-card">
+              <div class="oss-growth">
+                <div class="oss-growth-canvas">
+                  <svg class="oss-growth-svg" viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="ogFadeMobile" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="black" stop-opacity="0" />
+                        <stop offset="12%" stop-color="white" stop-opacity="1" />
+                        <stop offset="88%" stop-color="white" stop-opacity="1" />
+                        <stop offset="100%" stop-color="black" stop-opacity="0" />
+                      </linearGradient>
+                      <mask id="thinEndsMobile" maskUnits="objectBoundingBox">
+                        <rect x="0" y="0" width="600" height="160" fill="url(#ogFadeMobile)" />
+                      </mask>
+                    </defs>
+                    <path class="og-bg" d="M0 138 C 140 70, 280 155, 410 120 C 500 88, 560 35, 600 -5" />
+                    <path class="og-red" mask="url(#thinEndsMobile)"
+                      d="M0 138 C 140 70, 280 155, 410 120 C 500 88, 560 35, 600 -5" />
+                  </svg>
+                  <div class="og-pill">15%</div>
+                  <div class="og-bubble"><span>30%</span></div>
+                </div>
+                <div class="oss-growth-foot">Expected salary growth of 30%</div>
+              </div>
+            </div>
+
+            <!-- logos card with dual marquee -->
+            <div class="overview-sec-skill-card logos-card">
+              <div class="oss-logos-marquee">
+                <div class="oss-logos-track up">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                    alt="logo">
+                </div>
+                <div class="oss-logos-track down">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1459_1_7104d7d2fa.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1474_0ac5dc5a00.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1457_1_4d1e7a591c.svg"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1467_f93be936a7.png"
+                    alt="logo">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1470_f9e5b52d44.svg"
+                    alt="logo">
+                </div>
+              </div>
+              <div class="oss-logos-foot">"Global 2000" Enterprises Hiring</div>
+            </div>
+
+            <!-- testimonial 5 -->
+            <div class="overview-sec-skill-card">
+              <div class="oss-testimonial">
+                <h4>Amazing course experience!</h4>
+                <p>I had preconceived ideas about Scrum but wanted to learn more. WOW I had no idea how much Scrum/Agile philosophy meshes with my normal leadership style. I'm excited about the future leading and advocating for true Scrum environments. Amazing experience all around and I highly recommend it for anyone looking to become a Scrum Master or just looking for more information.</p>
+                <button class="oss-read-more">Read More</button>
+                <div class="oss-author">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                    alt="author">
+                  <span>Baumer Tom</span>
+                  <span class="oss-rating">⭐ 5/5</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- job roles stack refined -->
+            <div class="overview-sec-skill-card">
+              <div class="oss-roles-v2">
+                <div class="oss-chip main"> <img clas="icon"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                  Sr. Program/Product Manager</div>
+                <div class="oss-chip sub one"><img class="icon"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                  Solution Lead</div>
+                <div class="oss-chip sub two"><img class="icon"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                  Agile Coach</div>
+                <div class="oss-chip sub three"><img class="icon"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_4994936_9d7e3a79aa.svg" alt="">
+                  SAFe RTE</div>
+                <div class="oss-roles-foot">Top Job Roles</div>
+              </div>
+            </div>
+          </div>
+          <!-- Carousel Navigation -->
+          <div class="overview-sec-skill-carousel-navigation">
+          <div class="overview-sec-skill-carousel-dots"></div>
+            <div class="overview-carousel-nav-buttons">
+              <button class="overview-carousel-nav-btn overview-carousel-prev" aria-label="Previous">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484097_aecc733575.svg"
+                  alt="Previous">
+              </button>
+              <button class="overview-carousel-nav-btn overview-carousel-next" aria-label="Next">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_020f48e909.svg"
+                  alt="Next">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Participants Say About You Section -->
+
+      <!-- Floating Schedules CTA (collapsed/expanded) -->
+      <section id="floating-cta" class="floating-cta expanded" aria-live="polite">
+        <div class="floating-cta-card">
+          <button class="floating-cta-close" aria-label="Close">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484233_1_2bcba7524e.svg" alt="close">
+          </button>
+          <div class="floating-cta-header">Hurry and Save with Early Bird Tickets!</div>
+          <div class="floating-cta-body">
+            <p class="floating-cta-text">Next upcoming session : <span class="floating-cta-date"></span></p>
+            <button style="margin-top: 12px;" class="floating-cta-action" type="button" onclick="scrollToCourseShow()">
+              View All Schedules
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">
+            </button>
+          </div>
+        </div>
+
+        
+
+        <button class="floating-cta-expand" aria-label="Expand">
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484233_c109e121e5.svg" alt="expand">
+        </button>
+        <button class="floating-cta-collapsed" aria-label="Expand schedules" onclick="scrollToCourseShow()">
+          View All Schedules
+          <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">
+        </button>
+      </section>
+
+
+    <section class="what-participants-say-about-you-section">
+      <div class="what-participants-say-about-you-container-wrapper">
+
+        <h2 class="what-participants-say-about-you-title-container">What Participants Say About Our Trainers</h2>
+
+        <div class="what-participants-say-about-you-content-wrapper-learner-views">
+          <div class="what-participants-say-about-you-content-wrapper-learner-views-google">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1452_c026f73874.svg"
+              alt="Google" class="what-participants-say-about-you-content-wrapper-learner-views-google-icon">
+            <span class="what-participants-say-about-you-content-wrapper-learner-views-google-text">4.98/5</span>
+          </div>
+
+          <div class="what-participants-say-about-you-content-wrapper-learner-views-google">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1455_1_7d2b9e8db1.svg"
+              alt="Google" class="what-participants-say-about-you-content-wrapper-learner-views-google-icon">
+            <span class="what-participants-say-about-you-content-wrapper-learner-views-google-text desktop-learner-reviews-text">50000 + Learner
+              reviews</span>
+          </div>
+
+        </div>
+
+        <!-- Mobile/Tablet: Learner reviews text outside red box (centered) -->
+        <div class="mobile-learner-reviews">
+          <span class="mobile-learner-reviews-text">⭐ 50000 + Learner reviews</span>
+        </div>
+
+
+        <div class="what-participants-say-about-you-container">
+          <div class="what-participants-say-about-you-wrapper">
+            <div class="what-participants-say-about-you-track">
+              <!-- Testimonial Card 1 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Excellent instructors and engaging course</h4>
+                  <p class="what-participants-say-about-you-text">
+                    I attended the "Leading SAFe" course offered by Skillbook this past weekend and while I was not excited to spend my weekend in front of the computer I signed up. I must admit that the course far exceeded my expectations! Harry Narang and Jim were EXCELLENT instructors. The class was interesting, informative, and fun. I loved the group exercises and examples. Harry knows how to keep the participants engaged and took the extra time to answer specific questions. I will definitely take more classes that he is leading!
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                      alt="Teresa Williams" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Teresa Williams</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_300221_cbfa763804.svg"
+                      alt="Google" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Card 2 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Excellent instructor</h4>
+                  <p class="what-participants-say-about-you-text">
+                    Amy was an excellent instructor. The class was very informative and engaging, I'd highly recommend it!
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                      alt="Alexandra Khan" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Alexandra Khan</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
+                      alt="LinkedIn" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Card 3 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Talented first class trainer</h4>
+                  <p class="what-participants-say-about-you-text">
+                    POPM certification training with Amy Tayal was a good one. She is a talented first class trainer.
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_2_9969980637.svg"
+                      alt="Saravana I" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Saravana I</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
+                      alt="LinkedIn" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+              <!-- Testimonial Card 4 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Excellent instructor and course</h4>
+                  <p class="what-participants-say-about-you-text">
+                    This course was wonderful and Harry is an excellent instructor. I currently work on a scaled project and was constantly finding tips to leverage in my work both from the content and from Harry's instruction and examples. I can't recommend him and this course highly enough!
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                      alt="Monet Duval" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Monet Duval</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_300221_cbfa763804.svg"
+                      alt="Google" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Card 5 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Skillbook Academy rocks!</h4>
+                  <p class="what-participants-say-about-you-text">
+                    Skillbook Academy rocks! I just finished the SAFE POPM course with Amy Tayal as my Agile coach, and it was a blast. Amy's coaching was top-notch - she made learning fun and engaging, and her expertise and guidance were priceless.
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                      alt="Nuwan Waas" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Nuwan Waas</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
+                      alt="LinkedIn" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Card 6 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Great trainer and engaging course</h4>
+                  <p class="what-participants-say-about-you-text">
+                    I had a great experience during the SAFe Scrum Master course. Chris Harrison is a great trainer and the course was very engaging and practical. I highly recommend it!
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_2_9969980637.svg"
+                      alt="Mihai Ilies" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Mihai Ilies</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
+                      alt="LinkedIn" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Card 7 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Great interactive and hands-on class</h4>
+                  <p class="what-participants-say-about-you-text">
+                    The SSM class, presented by Chris was great. I like the fact that they managed to package the class up into only 2 days and you didn't have to just sit there and watch Ferris Bueller's teacher give a boring Preso. The class was very interactive and hands-on covered all the points required to thoroughly learn the info. Chris made it interesting and funny and to make sure we weren't asleep he constantly quizzed us and took the time to stop along the way to say 'You might see this on the exam'. I'm planning on taking further Scrum and SAFe classes and its a no brainer where I will be taking them. Good stuff!
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                      alt="Michael Swafford" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Michael Swafford</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_300221_cbfa763804.svg"
+                      alt="Google" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Testimonial Card 8 -->
+              <div class="what-participants-say-about-you-card">
+                <div class="what-participants-say-about-you-quotation-marks">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1155628_d21455b671.svg"
+                    alt="Quotation marks" class="what-participants-say-about-you-quotation-icon">
+                </div>
+                <div class="what-participants-say-about-you-content">
+                  <h4 class="what-participants-say-about-you-card-title">Very good coach and trainer</h4>
+                  <p class="what-participants-say-about-you-text">
+                    I took the SAFe POPM training with Amy and it was engaging and very productive. The entire material was very professional, well explained. Amy is a very good coach and trainer helping us to understand and apply these new concepts.
+                  </p>
+                </div>
+                <div class="what-participants-say-about-you-footer">
+                  <div class="what-participants-say-about-you-author-info">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                      alt="Gabriel Garcia" class="what-participants-say-about-you-author-image">
+                    <span class="what-participants-say-about-you-author-name">Gabriel Garcia</span>
+                  </div>
+                  <div class="what-participants-say-about-you-platform-icon">
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
+                      alt="LinkedIn" class="what-participants-say-about-you-platform-logo">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+          <!-- Carousel Navigation -->
+          <div class="what-participants-say-about-you-navigation">
+            <button class="what-participants-say-about-you-btn what-participants-say-about-you-prev"
+              aria-label="Previous testimonial">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484097_aecc733575.svg"
+                alt="Previous" class="what-participants-say-about-you-nav-arrow">
+            </button>
+            <button class="what-participants-say-about-you-btn what-participants-say-about-you-next"
+              aria-label="Next testimonial">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_020f48e909.svg"
+                alt="Next" class="what-participants-say-about-you-nav-arrow">
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- You can get individual and org benefits -->
+    <div class="individual-org-benefits-container">
+      <h1 class="individual-org-benefits-title">You can get individual and org benefits</h1>
+
+      <div class="individual-org-benefits-wrapper">
+        <!-- Individual Benefits Card -->
+        <div class="individual-org-benefits-card individual-org-benefits-expanded" id="individualCard">
+          <div class="individual-org-benefits-card-inner">
+            <!-- Image Section -->
+            <div class="individual-org-benefits-image-wrapper">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1497_1_210393e81a.png"
+                alt="Professional" class="individual-org-benefits-image">
+            </div>
+
+            <!-- Content Section -->
+            <div class="individual-org-benefits-content-wrapper">
+              <!-- Collapsed State -->
+              <div class="individual-org-benefits-collapsed-state">
+                <h2 class="individual-org-benefits-heading">Individual Benefits</h2>
+                <div class="individual-org-benefits-arrow">
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_1_b2f6892af6.svg"
+                    alt="">
+                </div>
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1497_2_4502777398.png"
+                  alt="Professional" class="individual-org-benefits-collapsed-image">
+              </div>
+
+              <!-- Expanded State -->
+              <div class="individual-org-benefits-expanded-state">
+                <h2 class="individual-org-benefits-heading">Individual Benefits</h2>
+                <p class="individual-org-benefits-description">Explore various individual benefits of taking Skillbook
+                  SAFe implementation course</p>
+
+                <div class="individual-org-benefits-list">
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_cdb804aeb3.svg"
+                        alt="">
+
+                    </div>
+                    <span class="individual-org-benefits-text">Higher Salary</span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_1_8c28c8793a.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Increased employability</span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_2_7a1eb68548.svg"
+                        alt="">
+
+                    </div>
+                    <span class="individual-org-benefits-text">Deliver High-Value Outcomes
+                    </span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_3_9887f4af01.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">A Competitive Edge to Your Resume</span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484219_43e5247fa4.svg"
+                        alt="">
+
+                    </div>
+                    <span class="individual-org-benefits-text">Advanced SAFe Implementation Skills</span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_4_c7e0e02089.svg"
+                        alt="">
+
+                    </div>
+                    <span class="individual-org-benefits-text">Global Acknowledgement</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Organizational Benefits Card -->
+        <div class="individual-org-benefits-card individual-org-benefits-collapsed" id="organizationalCard">
+          <div class="individual-org-benefits-card-inner">
+            <!-- Content Section -->
+            <div class="individual-org-benefits-content-wrapper">
+              <!-- Collapsed State -->
+              <div class="individual-org-benefits-collapsed-state">
+                <h2 class="individual-org-benefits-heading">Organizational Benefits</h2>
+                <div class="individual-org-benefits-arrow-left">
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_1_b2f6892af6.svg"
+                    alt="">
+                </div>
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_1000002842_16c3f01289.png"
+                  alt="">
+              </div>
+
+              <!-- Expanded State -->
+              <div class="individual-org-benefits-expanded-state">
+                <h2 class="individual-org-benefits-heading">Organizational Benefits</h2>
+                <p class="individual-org-benefits-description">Explore various organizational benefits of taking
+                  Skillbook SAFe implementation course</p>
+
+                <div class="individual-org-benefits-list">
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_cdb804aeb3.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Leadership Empowerment </span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_1_8c28c8793a.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Measurable ROI
+                    </span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_2_7a1eb68548.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Team Enablement
+                    </span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_3_9887f4af01.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Enterprise Collaboration 
+                    </span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484219_43e5247fa4.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Organizational Resilience
+                    </span>
+                  </div>
+
+                  <div class="individual-org-benefits-item">
+                    <div class="individual-org-benefits-icon">
+                      <img
+                        src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484218_4_c7e0e02089.svg"
+                        alt="">
+                    </div>
+                    <span class="individual-org-benefits-text">Enhanced Productivity
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image Section -->
+            <div class="individual-org-benefits-image-wrapper">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_1000002842_16c3f01289.png"
+                alt="Team" class="individual-org-benefits-image org-2-image">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="courseShow"> 
+      
+    </div>
+
+
+
+    <!-- certification and learning goals  -->
+    <section id="get-certified" class="certification-learning-goals-section">
+      <div class="certification-learning-goals-container">
+        <div class="certification-learning-goals-header">
+          <img class="certification-learning-goals-trophy-icon"
+            src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_11167978_1_3d021c1292.svg"
+            alt="Trophy">
+          <div class="certification-learning-goals-title-container">
+            <span class="certification-learning-goals-label violet-label">GET CERTIFIED</span>
+            <h2 class="certification-learning-goals-title">Implementing SPC 6.0 Certification Roadmap
+            </h2>
+          </div>
+        </div>
+
+        <div class="certification-learning-goals-content">
+          <div class="certification-learning-goals-left">
+            <div class="certification-learning-goals-requirements">
+              <div class="certification-learning-goals-requirement-item">
+                <div class="certification-learning-goals-check-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1_aaddd0c112.svg"
+                    alt="Checkmark">
+                </div>
+                <span class="certification-learning-goals-requirement-text">Enroll in the <strong>Implementing
+                    SAFe® Course</strong></span>
+              </div>
+              <div class="certification-learning-goals-requirement-item">
+                <div class="certification-learning-goals-check-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1_aaddd0c112.svg"
+                    alt="Checkmark">
+                </div>
+                <span class="certification-learning-goals-requirement-text">Participate in a <strong>four-day</strong>
+                Expert-Led Training</span>
+              </div>
+              <div class="certification-learning-goals-requirement-item">
+                <div class="certification-learning-goals-check-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1_aaddd0c112.svg"
+                    alt="Checkmark">
+                </div>
+                <span class="certification-learning-goals-requirement-text">Demonstrate Your Mastery
+                </span>
+              </div>
+              <div class="certification-learning-goals-requirement-item">
+                <div class="certification-learning-goals-check-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1_aaddd0c112.svg"
+                    alt="Checkmark">
+                </div>
+                <span class="certification-learning-goals-requirement-text">Earn Global Credential
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="certification-learning-goals-right">
+            <div class="certification-learning-goals-process">
+              <div class="certification-learning-goals-step">
+                <div class="certification-learning-goals-step-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_6377988_26134e224a.svg"
+                    alt="Document Edit">
+                </div>
+                <div class="certification-learning-goals-step-label certification-learning-goals-step-active act-1">
+
+                  <span class="certification-learning-goals-step-text">Step</span>
+                  <span class="certification-learning-goals-step-number">1</span>
+                  <div class="certification-learning-goals-step-arrow"></div>
+                </div>
+                <p class="certification-learning-goals-step-description">Register for the course</p>
+              </div>
+
+              <div class="certification-learning-goals-step">
+                <div class="certification-learning-goals-step-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_2791441_33b28e938e.svg"
+                    alt="Video">
+                </div>
+                <div class="certification-learning-goals-step-label">
+
+                  <span class="certification-learning-goals-step-text">Step</span>
+                  <span class="certification-learning-goals-step-number">2</span>
+                  <div class="certification-learning-goals-step-arrow"></div>
+                </div>
+                <p class="certification-learning-goals-step-description">Attend the workshop</p>
+              </div>
+
+              <div class="certification-learning-goals-step">
+                <div class="certification-learning-goals-step-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_2874786_94888254df.svg"
+                    alt="Certificate">
+                </div>
+                <div class="certification-learning-goals-step-label">
+
+                  <span class="certification-learning-goals-step-text">Step</span>
+                  <span class="certification-learning-goals-step-number">3</span>
+                  <div class="certification-learning-goals-step-arrow"></div>
+                </div>
+                <p class="certification-learning-goals-step-description">Pass the exam</p>
+              </div>
+
+              <div class="certification-learning-goals-step">
+                <div class="certification-learning-goals-step-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_6022815_cfb9666e5a.svg"
+                    alt="Refresh">
+                </div>
+                <div class="certification-learning-goals-step-label">
+
+                  <span class="certification-learning-goals-step-text">Step</span>
+                  <span class="certification-learning-goals-step-number">4</span>
+                  <div class="certification-learning-goals-step-arrow"></div>
+                </div>
+                <p class="certification-learning-goals-step-description">Upon certification, get 1-year membership with
+                  Scaled Agile</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- implementing safe course section -->
+    <section class="implementing-safe-course-section">
+      <div class="implementing-safe-course-container">
+        <h2 class="implementing-safe-course-title">Who is the Implementing SAFe® Course for?</h2>
+        <div class="implementing-safe-course-tags-container">
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Program & Project Managers</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Product & Product Line Managers</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Business Analysts</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Executives & Leaders</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Portfolio Managers</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">System Architects</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Directors</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Solution Architects</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Agile Coaches</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Development/QA</span>
+          </div>
+          <div class="implementing-safe-course-tag">
+            <img class="implementing-safe-course-icon"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg"
+              alt="Checkmark">
+            <span class="implementing-safe-course-text">Process Leads</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- exam prerequisites section -->
+    <section id="exam-details" class="exam-prerequisites-section">
+      <div class="exam-prerequisites-container">
+        <div class="exam-prerequisites-content">
+          <p class="exam-prerequisites-details-label">EXAM DETAILS</p>
+          <h2 class="exam-prerequisites-title">Prerequisites for SAFe® Practice Consultant Certification
+          </h2>
+          <p class="exam-prerequisites-description">
+            The Implementing SAFe® course is open to anyone passionate about driving Agile transformation — whether you’re a seasoned professional or just beginning your Lean-Agile journey.
+While no prior experience is mandatory, the following background is highly recommended for those aiming to achieve the SAFe® Practice Consultant (SPC 6.0) certification and lead enterprise-scale Agile initiatives:
+
+          </p>
+
+          <div class="exam-prerequisites-format-row">
+            <div class="exam-prerequisites-format-item">
+              <img class="exam-prerequisites-format-icon"
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484212_0679f8c91b.svg"
+                alt="" />
+              <span>120 minutes Online closed book Exam</span>
+            </div>
+            <div class="exam-prerequisites-format-item">
+              <img class="exam-prerequisites-format-icon"
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484212_1_3ffda2b6fc.svg"
+                alt="" />
+              <span>60 Questions of Multiple-choice</span>
+            </div>
+            <div class="exam-prerequisites-format-item">
+              <img class="exam-prerequisites-format-icon"
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484212_2_5b4828cba8.svg"
+                alt="" />
+              <span>Passing Score 80%</span>
+            </div>
+
+            <div class="exam-prerequisites-format-item">
+              <img class="exam-prerequisites-format-icon"
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484212_3_ed1919bd81.svg"
+                alt="" />
+              <span>Gets submitted when Timer goes out</span>
+            </div>
+            <div class="exam-prerequisites-format-item">
+              <img class="exam-prerequisites-format-icon"
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484212_4_cd5fbe9723.svg"
+                alt="" />
+              <span>Unanswered questions are marked wrong</span>
+            </div>
+
+          </div>
+
+
+        </div>
+
+        <div class="exam-prerequisites-images">
+          <div class="exam-prerequisites-images-column exam-prerequisites-images-column-1">
+            <div class="exam-prerequisites-marquee">
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624341_1_e4bc4f31c0.png"
+                  alt="Student studying">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624343_1_68173358c4.png"
+                  alt="Student with tablet">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624344_424c21219a.png"
+                  alt="Student with headphones">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624342_1_cb353b8091.png"
+                  alt="Student working">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624345_d68e3eebe6.png"
+                  alt="Student studying">
+              </div>
+              <!-- Duplicate for seamless loop -->
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624341_1_e4bc4f31c0.png"
+                  alt="Student studying">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624343_1_68173358c4.png"
+                  alt="Student with tablet">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624344_424c21219a.png"
+                  alt="Student with headphones">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624342_1_cb353b8091.png"
+                  alt="Student working">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624345_d68e3eebe6.png"
+                  alt="Student studying">
+              </div>
+            </div>
+          </div>
+
+          <div class="exam-prerequisites-images-column exam-prerequisites-images-column-2">
+            <div class="exam-prerequisites-marquee">
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624342_1_cb353b8091.png"
+                  alt="Student working">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624345_d68e3eebe6.png"
+                  alt="Student studying">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624341_1_e4bc4f31c0.png"
+                  alt="Student studying">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624343_1_68173358c4.png"
+                  alt="Student with tablet">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624344_424c21219a.png"
+                  alt="Student with headphones">
+              </div>
+              <!-- Duplicate for seamless loop -->
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624342_1_cb353b8091.png"
+                  alt="Student working">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624345_d68e3eebe6.png"
+                  alt="Student studying">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624341_1_e4bc4f31c0.png"
+                  alt="Student studying">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624343_1_68173358c4.png"
+                  alt="Student with tablet">
+              </div>
+              <div class="exam-prerequisites-image-item">
+                <img
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624344_424c21219a.png"
+                  alt="Student with headphones">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- what you learn section -->
+    <section id="learning" class="what-you-learn-sec">
+      <h3 class="what-you-learn-sec-right-title">What you Learn</h3>
+      <div class="what-you-learn-sec-container">
+        <!-- Left Panel -->
+        <div class="what-you-learn-sec-left-panel">
+          <div class="what-you-learn-sec-left-content">
+            <h2 class="what-you-learn-sec-left-title">Learn all best Agile practices at an alarming pace</h2>
+
+            <!-- Three white labels with red borders and checkmarks -->
+            <div class="what-you-learn-sec-left-labels">
+              <div class="what-you-learn-sec-left-label">
+                <img class="what-you-learn-sec-left-label-icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1c7cc79d47.svg" alt="" />
+                <span class="what-you-learn-sec-left-label-text">Strategy Execution</span>
+              </div>
+              <div class="what-you-learn-sec-left-label">
+                <img class="what-you-learn-sec-left-label-icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1c7cc79d47.svg" alt="" />
+                <span class="what-you-learn-sec-left-label-text">Flow Optimization</span>
+              </div>
+              <div class="what-you-learn-sec-left-label">
+                <img class="what-you-learn-sec-left-label-icon"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_1442912_1c7cc79d47.svg" alt="" />
+                <span class="what-you-learn-sec-left-label-text">Value stream identification</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="what-you-learn-sec-right-panel">
+
+          <div class="what-you-learn-sec-right-grid">
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Successful Transformation</h4>
+              <p class="what-you-learn-sec-right-item-description">Master the principles and practices of the Scaled Agile Framework (SAFe®).
+              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Implementation</h4>
+              <p class="what-you-learn-sec-right-item-description">Learn to lead Agile transformations across teams, programs, and enterprises.
+              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Portfolio Empowerment</h4>
+              <p class="what-you-learn-sec-right-item-description">Gain skills to coach leaders, teams, and stakeholders in Lean-Agile adoption.
+              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Organizational Alignment</h4>
+              <p class="what-you-learn-sec-right-item-description">Understand how to design and implement Agile Release Trains (ARTs).
+              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Flow Optimization</h4>
+              <p class="what-you-learn-sec-right-item-description">Develop strategies to align business goals with Agile execution.
+              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">ART Launch</h4>
+              <p class="what-you-learn-sec-right-item-description">Learn to facilitate SAFe® workshops and training sessions effectively.              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Strategy Execution</h4>
+              <p class="what-you-learn-sec-right-item-description">Build the confidence to drive continuous improvement and measurable outcomes.
+              </p>
+            </div>
+            <div class="what-you-learn-sec-right-item">
+              <h4 class="what-you-learn-sec-right-item-title">Training and Coaching</h4>
+              <p class="what-you-learn-sec-right-item-description">Train managers and executives in Leading SAFe®</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- what you earn section -->
+    <section class="what-you-earn-cont">
+      <h2 class="what-you-earn-cont-title">What you Earn</h2>
+      <div class="what-you-earn-cont-container">
+        <!-- First Content Div -->
+        <div class="what-you-earn-cont-content-1">
+          <div class="what-you-earn-cont-feature-item">
+            <div class="what-you-earn-cont-feature-header">
+              <div class="what-you-earn-cont-feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Flat_Color_c350fbef0d.svg"
+                  alt="Check">
+              </div>
+              <h3 class="what-you-earn-cont-feature-header-title">Consultant Certification</h3>
+            </div>
+            <div class="what-you-earn-cont-feature-content">
+              <div class="what-you-earn-cont-feature-badge">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1509_c7071daead.svg"
+                  alt="Badge">
+              </div>
+              <div class="what-you-earn-cont-feature-text">
+                <p class="what-you-earn-cont-feature-description">SAFe® Practice Consultant Certification from Scaled
+                  Agile</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="what-you-earn-cont-feature-item">
+            <div class="what-you-earn-cont-feature-header">
+              <div class="what-you-earn-cont-feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Flat_Color_c350fbef0d.svg"
+                  alt="Check">
+              </div>
+              <h3 class="what-you-earn-cont-feature-header-title">Digital Badge</h3>
+            </div>
+            <div class="what-you-earn-cont-feature-content">
+              <div class="what-you-earn-cont-feature-badge">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1511_61f98b17e0.svg"
+                  alt="Badge">
+              </div>
+              <div class="what-you-earn-cont-feature-text">
+                <p class="what-you-earn-cont-feature-description">Showcase your achievement on professional platforms and stand out in the Agile expert community.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="what-you-earn-cont-feature-item">
+            <div class="what-you-earn-cont-feature-header">
+              <div class="what-you-earn-cont-feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Flat_Color_c350fbef0d.svg"
+                  alt="Check">
+              </div>
+              <h3 class="what-you-earn-cont-feature-header-title">Course Workbook</h3>
+            </div>
+            <div class="what-you-earn-cont-feature-content">
+              <div class="what-you-earn-cont-feature-badge">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1512_3_b3a5318a71.svg"
+                  alt="Badge">
+              </div>
+              <div class="what-you-earn-cont-feature-text">
+                <p class="what-you-earn-cont-feature-description">Receive a comprehensive Attendee Workbook directly from Scaled Agile.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Div -->
+        <div class="what-you-earn-cont-image-section">
+          <img class="what-you-earn-cont-main-image"
+            src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484158_3f1ac03efc.png"
+            alt="SPC Certification">
+        <p>Exclusive Course Benefits That Set You Apart
+        </p>
+
+        </div>
+
+        <!-- Second Content Div -->
+        <div class="what-you-earn-cont-content-1">
+          <div class="what-you-earn-cont-feature-item">
+            <div class="what-you-earn-cont-feature-header">
+              <div class="what-you-earn-cont-feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Flat_Color_c350fbef0d.svg"
+                  alt="Check">
+              </div>
+              <h3 class="what-you-earn-cont-feature-header-title">Get Credits</h3>
+            </div>
+            <div class="what-you-earn-cont-feature-content">
+              <div class="what-you-earn-cont-feature-badge">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1510_1_783379ea1f.svg"
+                  alt="Badge">
+              </div>
+              <div class="what-you-earn-cont-feature-text">
+                <p class="what-you-earn-cont-feature-description">Gain 32 PDUs and 32 SEUs toward your continued professional development.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="what-you-earn-cont-feature-item">
+            <div class="what-you-earn-cont-feature-header">
+              <div class="what-you-earn-cont-feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Flat_Color_c350fbef0d.svg"
+                  alt="Check">
+              </div>
+              <h3 class="what-you-earn-cont-feature-header-title">Membership</h3>
+            </div>
+            <div class="what-you-earn-cont-feature-content">
+              <div class="what-you-earn-cont-feature-badge">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1512_4_f0cd573ed3.svg"
+                  alt="Badge">
+              </div>
+              <div class="what-you-earn-cont-feature-text">
+                <p class="what-you-earn-cont-feature-description">Access exclusive tools, resources, and the global SAFe® practitioner network.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="what-you-earn-cont-feature-item">
+            <div class="what-you-earn-cont-feature-header">
+              <div class="what-you-earn-cont-feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Flat_Color_c350fbef0d.svg"
+                  alt="Check">
+              </div>
+              <h3 class="what-you-earn-cont-feature-header-title">Continuous Learning</h3>
+            </div>
+            <div class="what-you-earn-cont-feature-content">
+              <div class="what-you-earn-cont-feature-badge">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1512_5_47c7d4cf24.svg"
+                  alt="Badge">
+              </div>
+              <div class="what-you-earn-cont-feature-text">
+                <p class="what-you-earn-cont-feature-description">Stay ahead with ongoing Learning Bytes and updates to keep your skills current.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- more question and answers -->
+
+    <section class="more-question-and-answers-main-section">
+      <div class="more-question-and-answers-container">
+        <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/grouped_lady_be0224f046.png" alt="">
+
+        <div class="more-question-and-answers-content">
+          <div class="more-question-and-answers-content-title-container">
+            <p class="more-question-and-answers-conten-label violet-label">GOT MORE QUESTIONS? WE'VE GOT ANSWERS!</p>
+            <h3 class="more-question-and-answers-conten-title">Hurry! Seats Are Filling Fast! Invest in Your Growth Today.
+            </h3>
+          </div>
+          <button class="red-button more-question-and-answers-content-button" onclick="scrollToCourseShow()">View All Schedules
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">
+
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- certification curriculam section -->
+
+    <!-- Line 342 -->
+    <section id="curriculum" class="certification-curriculum-sec">
+      <div class="certification-curriculum-container">
+        <div class="certification-curriculum-header">
+          <span class="curriculum-label violet-label">CURRICULUM</span>
+          <h2 class="curriculum-title">SAFe® Certification Curriculum
+          </h2>
+          <p class="curriculum-description">
+            Master the Scaled Agile Framework (SAFe®) through an immersive learning experience designed to help you build real-world agility, leadership, and transformation skills. This comprehensive curriculum blends expert-led guidance, practical tools, and flexible learning formats to accelerate your growth.
+          </p>
+        </div>
+
+        <div class="curriculum-features">
+          <h3 class="features-heading">What's Included</h3>
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/video_1_ae664f57fd.svg"
+                  alt="Video icon">
+              </div>
+              <span class="feature-text">6 Hours of Expert Video Lessons</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_26_94c923ea5e.svg"
+                  alt="Mobile and TV icon">
+              </div>
+              <span class="feature-text">Multi-Device Access 
+              </span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_28_db3b231099.svg"
+                  alt="Certificate icon">
+              </div>
+              <span class="feature-text">Certificate of completion</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Icon_1_b92d2a932d.svg"
+                  alt="Articles icon">
+              </div>
+              <span class="feature-text">13 Insightful Articles</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_27_6bd1d59009.svg"
+                  alt="Downloadable resources icon">
+              </div>
+              <span class="feature-text">Downloadable Resources
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="curriculum-modules">
+          <div class="curriculum-module">
+            <div class="module-header">
+              <div class="module-header-left">
+                <h3 class="module-title">Core Competencies & Foundational Principles
+                </h3>
+                <span class="module-number">Modul 1</span>
+              </div>
+              <button class="module-toggle" aria-label="Toggle module details">
+                <span class="toggle-text">Less details</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="module-content">
+              <div class="module-topics">
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <span class="topic-text">Business Agility in the Digital Era
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Agile Product Delivery Excellence
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Lean-Agile Leadership Mindset
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Strategic Lean Portfolio Management
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">High-Performing Team & Technical Agility
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Leading and Sustaining Transformation
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="curriculum-module-divider"></div>
+
+          <div class="curriculum-module">
+            <div class="module-header">
+              <div class="module-header-left">
+                <h3 class="module-title">Implementation & Execution</h3>
+                <span class="module-number">Modul 2</span>
+              </div>
+              <button class="module-toggle" aria-label="Toggle module details">
+                <span class="toggle-text">Less details</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="module-content">
+              <div class="module-topics">
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Reaching the SAFe® Tipping Point
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Coaching Agile Release Trains (ARTs)</span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Designing Scalable Implementation Roadmaps
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Accelerating Enterprise Business Agility
+                  </span>
+                </div>
+                <div class="topic-item">
+                  <img class="topic-check"
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_49_e060ca0909.svg" alt="">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span class="topic-text">Planning & Launching ARTs Successfully
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <button class="red-button align-btn-left">Download Curriculum <img
+            src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_9131795_cfed70044a.svg"
+            alt=""></button>
+      </div>
+    </section>
+
+
+    <!-- why skillbook and advantages section -->
+    <section id="why-skillbook" class="why-skillbook-and-advantages-section">
+      <div class="why-skillbook-and-advantages-container">
+        <div class="why-skillbook-and-advantages-title-container">
+          <p class="why-skillbook-and-advantages-title violet-label">Why Skillbook</p>
+          <h2 class="why-skillbook-and-advantages-title-2">The Skillbook Advantage</h2>
+          <p class="why-skillbook-and-advantages-description">With industry-leading SAFe® experts guiding every cohort, the Skillbook Advantage is not just a training program - it’s a masterfully engineered transformation experience. 
+            Our approach blends immersive simulations, real-world use cases, and personalized support to help you turn SAFe® knowledge into measurable business impact.
+            </p>
+        </div>
+
+        <div class="why-skillbook-and-advantages-1st-attemt-success">
+
+          <div class="why-skillbook-and-advantages-1st-attemt-success-content">
+            <h3>1st Attempt Success</h3>
+            <p><span class="why-skillbook-and-advantages-1st-attemt-success-content-p-span">95%+</span>Pass Rate</p>
+
+            <div class="why-skillbook-and-advantages-1st-attemt-success-content-image">
+              <div class="marquee-container">
+                <div class="marquee-content">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_c84ad54277.svg" alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_16_ee2084fc6a.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_17_d08629220b.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_18_ddc2cf6694.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_19_8ccf1cdcd2.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_20_d28909f3d6.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_21_1f9a174d8e.svg"
+                    alt="">
+                  <!-- Duplicate for seamless loop -->
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_c84ad54277.svg" alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_16_ee2084fc6a.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_17_d08629220b.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_18_ddc2cf6694.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_19_8ccf1cdcd2.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_20_d28909f3d6.svg"
+                    alt="">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Image_21_1f9a174d8e.svg"
+                    alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="why-second-cc">
+            <h3>⭐ 4.86/5 Global Rating</h3>
+            <p>Renowned Implementation Experts <span>Highest Rated</span> Platinum SPCT Globally</p>
+          </div>
+
+          <div class="why-third-cc">
+            <div class="why-third-cc-image-text">
+              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/x39_2_debe9b4a34.svg" alt="" />
+              <h3>
+                Participants-Only Learning Access</h3>
+            </div>
+
+
+            <div class="why-third-cc-content-highlight">
+              <p><img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_51_5dc40c7b48.svg"
+                  alt="">Interview Preps</p>
+
+
+              <p><img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_51_5dc40c7b48.svg"
+                  alt="">Interview Preps</p>
+
+
+              <p><img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_51_5dc40c7b48.svg"
+                  alt="">E-Books</p>
+
+
+              <p><img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_51_5dc40c7b48.svg"
+                  alt="">E-Books</p>
+
+
+              <p><img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_51_5dc40c7b48.svg"
+                  alt="">Webinars</p>
+
+
+              <p><img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_51_5dc40c7b48.svg"
+                  alt="">Webinars</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="why-skillbook-post-trainin-support">
+
+          <div class="why-skillbook-img-bg-cont-1">
+            <div class="why-skillbook-img-bg-cont-1-content">
+              <p>Stay sharp and future-ready with blogs, webinars, toolkits, and expert insights designed to support ongoing learning
+              </p>
+
+            </div>
+
+            <div class="why-skillbook-cont-content-2">
+
+              <div class="why-skillbook-cont-content-2-item">
+                <h3>
+                  Experiential and Creative Workshops:
+                </h3>
+                <p>
+                  Every session blends hands-on activities, case studies, roleplays, and industry-grade simulations for practical implementation of SAFe® concepts. 
+                </p>
+              </div>
+
+
+              <div class="why-skillbook-cont-content-2-item-image-upload">
+                <div class="why-skillbook-cont-content-2-item-image-upload-image-wrapper">
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624341_2_fa6f4fff24.png"
+                    alt="">
+
+                  <p class="role-play-p"> <img
+                      src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_52_b0d67bd4e3.svg"
+                      alt="">Role Play</p>
+                </div>
+
+                <div class="why-skillbook-cont-content-2-item-image-upload-image-wrapper">
+                  <p class="role-play-p"> <img
+                      src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_52_b0d67bd4e3.svg"
+                      alt="">Simulations</p>
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624342_2_75b71693fb.png"
+                    alt="">
+
+
+                </div>
+
+                <div class="why-skillbook-cont-content-2-item-image-upload-image-wrapper">
+                  <img
+                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Rectangle_34624343_2_78a859225c.png"
+                    alt="">
+
+                  <p class="role-play-p"> <img
+                      src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_52_b0d67bd4e3.svg"
+                      alt="">Case Studies</p>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div>
+
+            </div>
+          </div>
+
+          <div class="why-skillbook-post-trainin-support-content-main-container">
+            <h3 class="why-skillbook-post-trainin-support-content-main-container-title">Post Training Support</h3>
+            <p class="why-skillbook-post-trainin-support-content-main-container-description">Making every session
+              practical and <span>industry-relevant.</span></p>
+
+            <!-- Stacked Profile Cards -->
+            <div class="stacked-cards-container">
+              <div class="stacked-card active" data-index="0">
+
+                <img class="profile-image-stack"
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+                  alt="Jacob Simmons">
+
+
+                <div class="profile-info">
+                  <h3> <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/x39_2_1_96b704ef36.svg"
+                      alt="">Jacob Simmons</h3>
+                  <div class="stats">
+                    <span class="students">5,000+ Students</span>
+                    <span class="experience">10 years exp</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stacked-card" data-index="1">
+                <img class="profile-image-stack"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+                  alt="Michael Chen">
+                <div class="profile-info">
+                  <h3>Michael Chen</h3>
+                  <div class="stats">
+                    <span class="students">8,400+ Students</span>
+                    <span class="experience">15 years exp</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stacked-card" data-index="2">
+                <img class="profile-image-stack"
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face"
+                  alt="David Rodriguez">
+                <div class="profile-info">
+                  <h3>David Rodriguez</h3>
+                  <div class="stats">
+                    <span class="students">9,000+ Students</span>
+                    <span class="experience">20 years exp</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stacked-card" data-index="3">
+                <img class="profile-image-stack"
+                  src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face"
+                  alt="James Wilson">
+                <div class="profile-info">
+                  <h3>James Wilson</h3>
+                  <div class="stats">
+                    <span class="students">9,000+ Students</span>
+                    <span class="experience">10 years exp</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="why-skillbook-marqueee-container">
+              <div class="marquee-content marquee-content-why-skillbook-marquee">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_2_fd3fc51390.svg" alt="">
+                <p>50 years in Industry</p>
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_2_fd3fc51390.svg" alt="">
+                <p><span>Leading SAFe</span></p>
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_2_fd3fc51390.svg" alt="">
+                <p>Top 5 partber</p>
+                <!-- Duplicate for seamless loop -->
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_2_fd3fc51390.svg" alt="">
+                <p>50 years in Industry</p>
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_2_fd3fc51390.svg" alt="">
+                <p><span>Leading SAFe</span></p>
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_2_fd3fc51390.svg" alt="">
+                <p>Top 5 partber</p>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- perfect tool for your excetional learning -->
+    <section class="perfect-tool-for-your-excetional-learning">
+
+      <section class="perfect-tool-for-your-excetional-learning-container-blue">
+        <div class="perfect-tool-for-your-excetional-learning-content-div">
+          <h2 class="perfect-tool-for-your-excetional-learning-title">Perfect Tool for Your Excetional Learning</h2>
+
+          <div class="tools-menu">
+            <div class="menu-item active" data-content="video-conferencing">
+              <div class="menu-indicator"></div>
+              <span class="menu-text">Video Conferencing Tool</span>
+            </div>
+            <div class="menu-item" data-content="group-collaboration">
+              <div class="menu-indicator"></div>
+              <span class="menu-text">Group Collaboration Tool</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="perfect-tool-for-your-excetional-learning-container-red">
+        <div class="perfect-tool-for-your-excetional-learning-content-red">
+          <img class="perfect-tool-for-your-excetional-learning-image-red"
+            src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1502_3e60db65dd.svg" alt="">
+          <h3 class="perfect-tool-for-your-excetional-learning-title-red">Making every class engaging, collaborative, and unforgettable with Zoom-powered interactive sessions.</h3>
+
+          <div class="perfect-tool-for-your-excetional-learning-content-red-list-points">
+
+            <p class="perfect-tool-for-your-excetional-learning-content-red-list-points-item"><img
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/video_8650267efc.svg" alt="">Experience crystal-clear visuals and sound in every session.
+              </p>
+
+
+            <p class="perfect-tool-for-your-excetional-learning-content-red-list-points-item"><img
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_17_f6458fa466.svg"
+                alt="">Collaborate, discuss, and innovate seamlessly with peers.
+              </p>
+
+            <p class="perfect-tool-for-your-excetional-learning-content-red-list-points-item"><img
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_18_22b01710b9.svg"
+                alt="">Share questions and reactions instantly with intuitive gestures.
+              </p>
+
+            <p class="perfect-tool-for-your-excetional-learning-content-red-list-points-item"><img
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Vector_46_478354cc28.svg" alt="">Sketch, annotate, and co-create ideas in real time.
+              </p>
+
+            <p class="perfect-tool-for-your-excetional-learning-content-red-list-points-item"><img
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_19_67e201a63f.svg" alt="">Present and explore concepts with effortless clarity.
+              </p>
+
+
+          </div>
+
+
+        </div>
+
+
+        <img class="perfect-tool-for-your-excetional-learning-image-2-red "
+          src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1501_7fd1b35ba8.png" alt="">
+      </section>
+
+
+    </section>
+
+
+    <!-- meet the agile leaders instructors -->
+    <section id="instructors" class="meet-the-agile-leaders-instructors">
+      <div class="meet-the-agile-leaders-instructors-container">
+        <p class="violet-label">Instructors</p>
+        <h2 class="meet-the-agile-leaders-instructors-title">Meet The Leading Agile Instructors</h2>
+        <p class="meet-the-agile-leaders-instructors-description">The training is led by "esteemed SPCTs" and features
+          "Training from The Leading
+          SPCs and SPCTs"</p>
+
+        <div class="meet-the-agile-leaders-instructors-carousel-container">
+          <button class="carousel-nav-btn carousel-prev" aria-label="Previous">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484097_aecc733575.svg"
+              alt="Previous">
+          </button>
+
+          <div class="carousel-wrapper">
+            <div class="carousel-track">
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="0">
+                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                  alt="John Hammond">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">John Hammond</h3>
+              </div>
+
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="1">
+                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                  alt="Michael Chen">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">Michael Chen</h3>
+              </div>
+
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="2">
+                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                  alt="David Rodriguez">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">David Rodriguez</h3>
+              </div>
+
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="3">
+                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                  alt="James Wilson">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">James Wilson</h3>
+              </div>
+
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="4">
+                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                  alt="Robert Taylor">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">Robert Taylor</h3>
+              </div>
+
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="5">
+                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
+                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                  alt="William Anderson">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">William Anderson</h3>
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-nav-btn carousel-next" aria-label="Next">
+            <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_020f48e909.svg"
+              alt="Next">
+          </button>
+        </div>
+
+        <div class="carousel-dots">
+          <button class="carousel-dot active" data-slide="0"></button>
+          <button class="carousel-dot" data-slide="1"></button>
+          <button class="carousel-dot" data-slide="2"></button>
+          <button class="carousel-dot" data-slide="3"></button>
+          <button class="carousel-dot" data-slide="4"></button>
+          <button class="carousel-dot" data-slide="5"></button>
+        </div>
+      </div>
+
+      <!-- Instructor Profile Card Section -->
+      <section class="instructor-profile-section">
+        <div class="instructor-profile-card">
+          <div class="profile-left">
+            <div class="profile-image-container">
+              <img class="profile-image"
+                src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
+                alt="John Hammond">
+            </div>
+
+            <div class="profile-info">
+              <div class="profile-name-section">
+                <h3 class="profile-name">John Hammond</h3>
+                <a href="#" class="linkedin-icon">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_3536505_723b31629b.svg"
+                    alt="LinkedIn">
+                </a>
+              </div>
+
+              <p class="profile-title">SAFe® Practice Consultant (SPC®), Agile Coach</p>
+            </div>
+
+            <div class="profile-stats">
+              <div class="stat-item">
+                <span class="stat-number">35 yrs</span>
+                <span class="stat-label">Experience</span>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <span class="stat-number">5,000 +</span>
+                <span class="stat-label">Students</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-middle">
+            <div class="profile-description">
+              <div class="description-full">
+                <p>Regarded as one of the world's most experienced SAFe® Practitioners and Trainers, Harry has led
+                  <strong>30+ SAFe enterprise</strong> transformations in both public and private sectors, training
+             
+               
+               
+                <p>John has worked with Fortune 500 companies across various industries, including financial services,
+                  healthcare, and technology sectors. His approach focuses on sustainable change management and building
+                  internal capabilities for long-term success.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-right">
+            <div class="companies-section">
+            <h4 class="companies-heading">Companies worked</h4>
+            <div class="company-logos">
+              <div class="company-logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/capital-one-logo.svg"
+                  alt="Capital One">
+              </div>
+              <div class="company-logo">
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/applied-frameworks-logo.svg"
+                  alt="Applied Frameworks">
+                </div>
+              </div>
+            </div>
+            
+            <div class="trainer-credentials-section">
+              <h4 class="trainer-credentials-heading">Trainer credentials</h4>
+              <div class="certification-badges" id="certificationBadges">
+                <!-- Certification badges will be populated from array -->
+                <div class="certification-badge">
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1450_6aada04ac2.svg"
+                    alt="POPM SAFe">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+
+
+    <!-- book a free demo session -->
+    <section class="book-a-free-demo-session">
+      <div class="book-a-free-demo-session-header">
+        <img class="book-a-free-demo-session-header-image"
+          src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1464_b1831b0cd7.png"
+          alt="book a free demo session">
+
+        <div class="book-a-free-demo-session-content">
+          <div class="book-a-free-demo-session-content-text">
+            <p class="book-a-free-demo-session-description violet-label">GOT MORE QUESTIONS? WE'VE GOT ANSWERS!</p>
+            <h2 class="book-a-free-demo-session-title">Schedule a Free Demo Today</h2>
+          </div>
+          <button class="book-a-free-demo-session-button red-button" onclick="scrollToCourseShow()">Request Callback <img class="red-button-arrow"
+              src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_8e81a59eb9.svg"
+              alt="arrow right"></button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- faq section -->
+    <section id="faqs" class="faq-section">
+      <div class="faq-header">
+        <span class="faq-label">FAQ</span>
+        <h2 class="faq-title">SAFe® SPC 6.0 Certification FAQs
+        </h2>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-item active">
+          <div class="faq-question">
+            <span>What Is A SAFE® Practice Consultant (SPC) Certification?</span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>The SAFe® SPC 6.0 certification equips professionals with enterprise-ready frameworks, practical tools, and actionable strategies to lead large-scale Agile transformations and deliver measurable business impact across organizations.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Who should enroll in this course?</span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>The course is ideal for Program & Project Managers, Product Managers, Business Analysts, Executives, Portfolio Managers, System Architects, Directors, Solution Architects, Agile Coaches, Development QA, and Process Leads aiming to lead enterprise-scale Agile initiatives.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> What are the prerequisites for SPC 6.0 certification?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>While there is no mandatory prior experience, it is recommended to have:
+              <ul>
+                <li>5+ years in software development, testing, business analysis, product management, or project management
+                </li>
+                <li>3+ years of practical experience working in Agile environments
+                </li>
+                <li>One or more relevant Agile certifications (Scrum Master, PMI-ACP, or equivalent)
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+
+        <!-- faq-4 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> What will I learn in this course?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>You will learn:
+                <li>Master SAFe® principles and practices
+
+                </li>
+                <li>Lead Agile transformations across teams, programs, and enterprises
+
+                </li>
+                <li>Coach leaders, teams, and stakeholders in Lean-Agile adoption
+                </li>
+                <li>Design and implement Agile Release Trains (ARTs)</li>
+                <li>Align business goals with Agile execution
+                </li>
+                <li>Facilitate SAFe® workshops and training sessions effectively
+                </li>
+                <li>Drive continuous improvement and measurable outcomes
+                </li>
+
+              </ul>
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How is the SAFe® Practice Consultant (SPC 6.0) certification delivered?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>The four-day certification program is expert-led and highly interactive, featuring live Q&A sessions, hands-on simulations, roleplays, real-world case studies, and collaborative exercises to ensure practical learning and application.
+
+            
+            </p>
+          </div>
+        </div>
+
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> What are the benefits of getting SPC 6.0 certified?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>The benefits of getting SPC 6.0 certified include:
+              <ul>
+                <li>Global recognition as a SAFe® leader
+
+                </li>
+                <li>Higher salary potential and career growth opportunities
+                </li>
+                <li>Advanced Agile leadership and implementation skills
+                </li>
+                <li>Ability to lead enterprise-scale Agile transformations</li>
+                <li>Access to a global network of certified SAFe® professionals
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> Is the course suitable for beginners?
+
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, the course is suitable for beginners. Even if you are new to SAFe®, the course provides the tools, mindset, and confidence to guide teams, influence change, and accelerate organizational agility.
+
+              
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> How do I earn the SPC 6.0 certification?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>To become a Certified SAFe® Practice Consultant, participants must:
+
+              <ul>
+                <li>Complete the four-day training facilitated by SAFe® Program Consultants
+                </li>
+                <li>Pass the post-training assessment with a minimum score of 80%
+                </li>
+                <li>Receive the official SAFe® SPC 6.0 credential from Scaled Agile, Inc.
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can SAFe® Practice Consultant certification help me in my career globally?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely. The SAFe® SPC 6.0 credential is recognized worldwide, enabling professionals to access leadership, consulting, and Agile transformation roles across industries and geographies.
+
+             
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> What makes Skillbook's SPC 6.0 training unique?
+
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>Skillbook combines expert-led instruction, immersive simulations, real-world case studies, and personalized support, ensuring learners not only gain certification but also develop practical skills to lead impactful Agile transformations in their organizations.
+
+              
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span> What are the prerequisites for SPC 6.0 certification?
+            </span>
+            <span class="faq-icon">^</span>
+          </div>
+          <div class="faq-answer">
+            <p>While there is no mandatory prior experience, it is recommended to have:
+              <ul>
+                <li>5+ years in software development, testing, business analysis, product management, or project management
+                </li>
+                <li>3+ years of practical experience working in Agile environments
+                </li>
+                <li>One or more relevant Agile certifications (Scrum Master, PMI-ACP, or equivalent)
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+  </div>
+
+  <!-- Consultant Popup Form -->
+  <div class="consultant-popup-overlay" id="consultantPopup">
+    <div class="consultant-popup">
+      <button class="consultant-popup-close" id="consultantPopupClose">&times;</button>
+      <h2>Talk to our learning consultant</h2>
+      <form id="consultantForm">
+        <div class="consultant-form-row">
+          <div class="consultant-form-group">
+            <label for="consultantName">Name *</label>
+            <input type="text" id="consultantName" name="name" required>
+          </div>
+          <div class="consultant-form-group">
+            <label for="consultantEmail">Email *</label>
+            <input type="email" id="consultantEmail" name="email" required>
+          </div>
+        </div>
+        <div class="consultant-form-row">
+          <div class="consultant-form-group">
+            <label for="consultantPhone">Phone Number *</label>
+            <input type="tel" id="consultantPhone" name="phone" required>
+          </div>
+          <div class="consultant-form-group">
+            <label for="consultantAvailability">Your Availability *</label>
+            <input type="text" id="consultantAvailability" name="availability" required>
+          </div>
+        </div>
+        <div class="consultant-form-group full-width">
+          <label for="consultantMessage">Message *</label>
+          <textarea id="consultantMessage" name="message" required></textarea>
+        </div>
+        <button type="submit" class="consultant-form-submit" id="consultantFormSubmit">Submit</button>
+        <div class="consultant-form-message" id="consultantFormMessage"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="src/graphql.js"></script>
+  <script src="src/main.js"></script>
+  <script src="src/consultant-form.js"></script>
+  <script src="src/date.js"></script>
+  <script>
+    // Function to scroll to #courseShow with offset for sticky navbar
+    function scrollToCourseShow() {
+      const courseShowElement = document.getElementById('courseShow');
+      if (courseShowElement) {
+        const elementPosition = courseShowElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - 60; // 60px offset for sticky navbar
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>

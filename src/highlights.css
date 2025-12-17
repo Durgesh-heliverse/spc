@@ -1,0 +1,726 @@
+/* Highlights Component Styles - Converted from SCSS */
+
+.highlights {
+  padding: 0px 10px 20px 10px;
+  background-color: #000;
+  margin: 0 auto;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.instructorHeader {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2A2A2A;
+}
+
+.instructorProfiles {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.instructorProfiles::-webkit-scrollbar {
+  display: none;
+}
+
+.instructorProfile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.instructorProfile.activeInstructor {
+  background: #88498F;
+}
+
+.instructorProfile.activeInstructor .instructorName {
+  color: #fff;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+}
+
+.instructorImage {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 30px;
+  height: 30px;
+}
+
+.instructorName {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  transition: color 0.3s ease;
+}
+
+.instructorProfile:hover:not(.activeInstructor) .instructorName {
+  color: #88498F;
+}
+
+.tabNavigation {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabNavigation::-webkit-scrollbar {
+  display: none;
+}
+
+.tabButton {
+  padding: 3px 4px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: #8A8A8A;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tabButton:hover {
+  color: #fff;
+  background: rgba(251, 87, 65, 0.1);
+}
+
+.tabButton.activeTab {
+  color: #FB5741;
+  border-bottom-color: #FB5741;
+  font-weight: 600;
+  background: transparent;
+}
+
+.tabButton.activeTab:hover {
+  color: #FB5741;
+  background: rgba(251, 87, 65, 0.1);
+}
+
+.tabContent {
+  min-height: 180px;
+  max-height: 180px;
+  position: relative;
+  overflow: visible;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.tabNavLeft,
+.tabNavRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tabNavLeft:hover,
+.tabNavRight:hover {
+  opacity: 0.8;
+}
+
+.tabNavLeft {
+  left: -8px;
+}
+
+.tabNavRight {
+  right: -8px;
+}
+
+.tabNavLeft img,
+.tabNavRight img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tabContentInner {
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
+}
+
+.aboutContent {
+  overflow-y: auto;
+  max-height: 180px;
+  height: 180px;
+  padding: 0;
+}
+
+.aboutContent::-webkit-scrollbar {
+  width: 4px;
+}
+
+.aboutContent::-webkit-scrollbar-track {
+  background: #444;
+  border-radius: 2px;
+}
+
+.aboutContent::-webkit-scrollbar-thumb {
+  background: #777;
+  border-radius: 2px;
+}
+
+.aboutContent::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.aboutText {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.videoContent {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  max-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoWrapper {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.videoPlayer {
+  width: 100%;
+  max-width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #000;
+}
+
+.testimonialsContent {
+  padding: 0;
+  position: relative;
+  width: 100%;
+  height: 180px;
+  max-height: 180px;
+  overflow: visible;
+}
+
+.testimonialsContent .customArrowLeft,
+.testimonialsContent .customArrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: opacity 0.2s ease;
+}
+
+.testimonialsContent .customArrowLeft:hover,
+.testimonialsContent .customArrowRight:hover {
+  opacity: 0.8;
+}
+
+.testimonialsContent .customArrowLeft img,
+.testimonialsContent .customArrowRight img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.testimonialsContent .customArrowLeft {
+  left: -20px;
+  top: 50%;
+  z-index: 101;
+}
+
+.testimonialsContent .customArrowRight {
+  right: -20px;
+  top: 50%;
+  z-index: 101;
+}
+
+.testimonialCarouselWrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.spc-about-testi-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.spc-about-testi-container::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonialSlideWrapper {
+  flex: 0 0 calc(100% - 32px);
+  min-width: calc(100% - 32px);
+  max-width: calc(100% - 32px);
+  scroll-snap-align: none;
+}
+
+.testimonialCard {
+  background: #1B1B1B;
+  border-radius: 8px;
+  padding: 12px;
+  height: 180px;
+  max-height: 180px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.reviewerImage {
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 36px;
+  height: 36px;
+}
+
+.testimonialDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.testimonialHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.testimonialName {
+  font-weight: 500;
+  font-size: 14px;
+  color: #DCDCDC;
+  font-family: "Inter", sans-serif;
+  padding-top: 0px !important;
+  margin: 0;
+}
+
+.dot {
+  font-size: 14px;
+  color: #6E7485;
+  font-family: "Inter", sans-serif;
+}
+
+.testimonialTime {
+  font-weight: 400;
+  font-size: 12px;
+  color: #6E7485;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+.testimonialRating {
+  display: flex;
+  gap: 0px;
+  margin-top: -4px !important;
+  color: #FFB400;
+}
+
+.testimonialText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #DFDFDF;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 100px;
+  padding-right: 6px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.testimonialText::-webkit-scrollbar {
+  width: 4px;
+}
+
+.testimonialText::-webkit-scrollbar-track {
+  background: #444;
+  border-radius: 2px;
+}
+
+.testimonialText::-webkit-scrollbar-thumb {
+  background: #777;
+  border-radius: 2px;
+}
+
+.testimonialText::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.imagesContent {
+  padding: 0;
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  height: 180px;
+  max-height: 180px;
+}
+
+.imagesContent .customArrowLeft,
+.imagesContent .customArrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: opacity 0.2s ease;
+}
+
+.imagesContent .customArrowLeft:hover,
+.imagesContent .customArrowRight:hover {
+  opacity: 0.8;
+}
+
+.imagesContent .customArrowLeft img,
+.imagesContent .customArrowRight img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.imagesContent .customArrowLeft {
+  left: -20px;
+  top: 50%;
+  z-index: 101;
+}
+
+.imagesContent .customArrowRight {
+  right: -20px;
+  top: 50%;
+  z-index: 101;
+}
+
+.imageCarouselWrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.spc-about-image-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.spc-about-image-container::-webkit-scrollbar {
+  display: none;
+}
+
+.imageSlideWrapper {
+  flex: 0 0 calc(100% - 32px);
+  min-width: calc(100% - 32px);
+  max-width: calc(100% - 32px);
+  scroll-snap-align: none;
+}
+
+.imageCard {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease-in-out;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.galleryImage {
+  height: 150px;
+  width: auto;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.credentialsContent {
+  width: 100%;
+  height: 180px;
+  max-height: 180px;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.credentialsLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 180px;
+  max-height: 180px;
+}
+
+.credentialSection {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  height: 85px;
+  max-height: 85px;
+  overflow: hidden;
+  /* border: 1px solid red; */
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px 0;
+  text-align: left;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: "Inter", sans-serif;
+  line-height: 1.2;
+}
+
+.credentialScrollContainer {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-right: 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-height: 65px;
+}
+
+.credentialScrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.credentialCarousel {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: max-content;
+}
+
+.credentialItem {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.credentialGrid {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-width: max-content;
+}
+
+.trustedSection {
+  background: #2E2E2E;
+}
+
+.credentialLogo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.trainerSection {
+  background: #0E3B65;
+}
+
+.credentialBadge {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.trainerSection .credentialCarousel {
+  gap: 12px;
+}
+
+.noData {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 40px 0;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+@media screen and (max-width: 950px) {
+  .highlights {
+    padding: 10px 8px !important;
+    max-width: 100%;
+  }
+
+  .instructorProfile {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .instructorImage {
+    width: 28px;
+    height: 28px;
+  }
+
+  .instructorName {
+    font-size: 12px;
+  }
+
+  .tabButton {
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .testimonialCard {
+    padding: 10px;
+    height: 180px;
+    max-height: 180px;
+  }
+
+  .testimonialText {
+    font-size: 11px;
+    max-height: 100px;
+  }
+
+  .galleryImage {
+    height: 140px;
+    max-height: 140px;
+  }
+
+  .credentialsLayout {
+    gap: 12px;
+  }
+
+  .credentialSection {
+    padding: 10px;
+    height: 85px;
+    max-height: 85px;
+  }
+
+  .sectionTitle {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .credentialCarousel {
+    gap: 12px;
+  }
+
+  .credentialLogo {
+    height: 50px;
+  }
+
+  .credentialBadge {
+    height: 50px;
+    width: 50px;
+  }
+
+  .testimonialsContent .customArrowLeft {
+    left: -8px;
+  }
+
+  .testimonialsContent .customArrowRight {
+    right: -8px;
+  }
+
+  .testimonialsContent .customArrowLeft,
+  .testimonialsContent .customArrowRight {
+    width: 24px;
+    height: 24px;
+  }
+
+  .imagesContent .customArrowLeft {
+    left: -8px;
+  }
+
+  .imagesContent .customArrowRight {
+    right: -8px;
+  }
+
+  .imagesContent .customArrowLeft,
+  .imagesContent .customArrowRight {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+
