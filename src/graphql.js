@@ -361,6 +361,7 @@ function populateScheduleHTML(firstSchedule, learnMoreCoach, timeZoneData, retry
     
     if (monthEl) {
       monthEl.textContent = startDate.month;
+      monthEl.classList.remove('loading-skeleton-text');
       console.log("Month set to:", startDate.month);
     }
     if (daysEl) {
@@ -371,6 +372,7 @@ function populateScheduleHTML(firstSchedule, learnMoreCoach, timeZoneData, retry
         daysEl.textContent = startDate.day;
         console.log("Days set to:", startDate.day);
       }
+      daysEl.classList.remove('loading-skeleton-text');
     }
     if (weekEl) {
       const endDayName = endDate ? formatDate(firstSchedule.end_date).dayName : null;
@@ -381,6 +383,7 @@ function populateScheduleHTML(firstSchedule, learnMoreCoach, timeZoneData, retry
         weekEl.textContent = startDate.dayName;
         console.log("Week set to:", startDate.dayName);
       }
+      weekEl.classList.remove('loading-skeleton-text');
     }
   } else {
     console.log("No start_date in schedule");
@@ -455,6 +458,7 @@ function populateScheduleHTML(firstSchedule, learnMoreCoach, timeZoneData, retry
       
       // Set the new time
       timeEl.textContent = timeText;
+      timeEl.classList.remove('loading-skeleton-text');
       
       // Force update - sometimes need to trigger reflow
       timeEl.style.display = 'none';
@@ -523,12 +527,26 @@ function populateScheduleHTML(firstSchedule, learnMoreCoach, timeZoneData, retry
       // Also make it a link for accessibility
       registerBtn.style.cursor = 'pointer';
     }
+    // Remove loading skeleton and restore button content
+    registerBtn.classList.remove('loading-skeleton-button');
+    if (!registerBtn.querySelector('img')) {
+      registerBtn.innerHTML = 'Register <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">';
+    }
+  }
+  
+  // Update view all dates button
+  const viewAllBtn = document.querySelector('.ns-btn-ghost');
+  if (viewAllBtn) {
+    viewAllBtn.classList.remove('loading-skeleton-button');
+    if (!viewAllBtn.querySelector('img')) {
+      viewAllBtn.innerHTML = 'View all dates <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Layer_93_6da3d19c24.svg" alt="">';
+    }
   }
 
-  // Show the next session card now that data is populated
+  // Remove loading state from next session card now that data is populated
   const nextSessionCard = document.getElementById('nextSessionCard');
   if (nextSessionCard) {
-    nextSessionCard.style.display = 'block';
+    nextSessionCard.classList.remove('loading');
   }
 
   // Update floating CTA date
@@ -558,6 +576,33 @@ function populateScheduleHTML(firstSchedule, learnMoreCoach, timeZoneData, retry
     }
     
     floatingCtaDate.textContent = formattedDate;
+    
+    // Let IntersectionObserver handle visibility based on scroll position
+    // Check if course section is in view before showing floating CTA
+    // Only show on desktop devices (width > 1024px)
+    const floatingCta = document.querySelector('#floating-cta');
+    const courseSection = document.querySelector('.course-display-google-landing');
+    const isDesktop = window.innerWidth > 1024;
+    
+    if (floatingCta && formattedDate && courseSection) {
+      // Hide on mobile/tablet
+      if (!isDesktop) {
+        floatingCta.style.setProperty('display', 'none', 'important');
+        return;
+      }
+
+      // Check if course section is currently in view
+      const rect = courseSection.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (!isInView) {
+        // Course section is out of view - show floating CTA (desktop only)
+        floatingCta.style.setProperty('display', 'block', 'important');
+      } else {
+        // Course section is in view - keep floating CTA hidden
+        floatingCta.style.setProperty('display', 'none', 'important');
+      }
+    }
   }
 }
 

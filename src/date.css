@@ -547,6 +547,7 @@
   z-index: 9999;
   pointer-events: none;
   max-width: 425px;
+  display: none !important; /* Hidden by default, shown when data is available */
 }
 
 .spc-date-widget-main-course-floating-container-sec {

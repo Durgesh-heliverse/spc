@@ -513,98 +513,144 @@ document.addEventListener('DOMContentLoaded', function() {
   const instructorsData = [
     {
       id: 0,
-      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png',
-      name: 'John Hammond',
-      title: 'SAFe® Practice Consultant (SPC®), Agile Coach',
-      experience: '35 yrs',
-      students: '5,000 +',
-      certificationImage: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1450_6aada04ac2.svg',
-      moreCertifications: '+1 more',
-      descriptionShort: 'Regarded as one of the world\'s most experienced SAFe® Practitioners and Trainers, Harry has led <strong>30+ SAFe enterprise</strong> transformations in both public and private sectors, training <strong>30,000+ professionals</strong> and coaching <strong>300+ teams</strong> to higher levels of agility. He aims to help...',
-      descriptionFull: '<p>Regarded as one of the world\'s most experienced SAFe® Practitioners and Trainers, Harry has led <strong>30+ SAFe enterprise</strong> transformations in both public and private sectors, training <strong>30,000+ professionals</strong> and coaching <strong>300+ teams</strong> to higher levels of agility.</p>',
+      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/MICHAEL_CALLAHAN_Second_Image_01_5b2c784607_dc606b7198_8de8e9d809.png',
+      name: 'Michael Callahan',
+      title: 'SAFe® Practice Consultant (SPC®) & Lean Agile Coach',
+      experience: '20+ yrs',
+      students: '700 +',
+      certificationImage: [
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SA_badge_8a29fd2d9a.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/LPM_WEB_f5b1e1e899.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SSM_png_cc996507ab.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm_ai_379c28dfda.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/spc_Safe6_0a34482fc0.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/pmp_600px_9cdb2e6d4f.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/pmp_600px_9cdb2e6d4f.png'
+      ],
+      descriptionShort: 'Michael Callahan is based in Phoenix, Arizona. Passion for connecting individual agility to the enterprise, helping students not only understand the “what” and “how” of agile but also the "why.” He has over 20 years of experience in Agile Development as a practitioner, leader and coach in industries like healthcare, financial services, travel, digital entertainment, etc. ',
+      descriptionFull: 'Michael Callahan is based in Phoenix, Arizona. Passion for connecting individual agility to the enterprise, helping students not only understand the “what” and “how” of agile but also the "why.” He has over 20 years of experience in Agile Development as a practitioner, leader and coach in industries like healthcare, financial services, travel, digital entertainment, etc. Michael specializes in training, scaled agile frameworks, and agile methodologies and is committed to creating an impact through his training sessions by incorporating implementable practices. Michael aims to enable his students to realize their full potential and teach the "what," "how," and "why" of Agile and its effectiveness in their current role in an organization.',
       companies: [
-        { name: 'Capital One', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1492_b856053051.svg' },
-        { name: 'Applied Frameworks', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1493_d2b4507870.svg' }
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/citibank_logo_BG_2_e19a8dd5f3.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/dell_bg_2_01_c683cb4734.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/google_bg_2_abb1806fdf.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Accenture_BG_2_363970d890.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/microsoft_bg_2_755a2075c0.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/tesla_bg_2_2e25924d84.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/ey_bg_2_c8e65e7c60.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cigna_bg_2_443af3527a.webp' ,
+
       ]
     },
     {
       id: 1,
-      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png',
-      name: 'Michael Chen',
-      title: 'SAFe® Practice Consultant (SPC®), Agile Coach',
-      experience: '25 yrs',
-      students: '8,400 +',
-      certificationImage: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm-badge.svg',
-      moreCertifications: '+1 more',
-      descriptionShort: 'A renowned Agile transformation expert with extensive experience in enterprise-level implementations. Michael has trained <strong>20+ enterprises</strong> and worked with <strong>25,000+ professionals</strong> across various industries. He focuses on...',
-      descriptionFull: '<p>A renowned Agile transformation expert with extensive experience in enterprise-level implementations. Michael has trained <strong>20+ enterprises</strong> and worked with <strong>25,000+ professionals</strong> across various industries.</p><p>He specializes in helping organizations scale Agile practices and has successfully guided numerous Fortune 500 companies through their transformation journeys.</p>',
+      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/deigo_73d3f5ee98.png',
+      name: 'Diego Groiso',
+      title: 'SAFe® Practice Consultant Trainer (SPCT®), Enterprise Transformation Coach',
+      experience: '20 yrs',
+      students: '600 +',
+      certificationImage: [
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SPCT_Logo_61460e12d5.svg',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/spc_web_9daf23d6e2.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SA_badge_8a29fd2d9a.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SSM_png_cc996507ab.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/LPM_WEB_f5b1e1e899.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm_ai_379c28dfda.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/AI_rte_logo_45fb161b81.png' ,
+      ],
+      descriptionShort: 'Diego is an SPC-T with over 8 years of experience driving SAFe Transformations and more than 20 years of helping organisations implement technology-based products and services, primarily in the Telecom Industry, as well as Publishing, Automotive, Utilities, and other sectors, in the USA, UK, Italy and Argentina. He successfully transformed the first Scaled Agile Programme in Vodafone Enterprise and became the Release Train Engineer. Diego later launched and coached several other digital transformation programs into SAFe at Vodafone. He trained more than 600 people across Europe in Agile and SAFe.',
+      descriptionFull: 'Diego is an SPC-T with over 8 years of experience driving SAFe Transformations and more than 20 years of helping organisations implement technology-based products and services, primarily in the Telecom Industry, as well as Publishing, Automotive, Utilities, and other sectors, in the USA, UK, Italy and Argentina. He successfully transformed the first Scaled Agile Programme in Vodafone Enterprise and became the Release Train Engineer. Diego later launched and coached several other digital transformation programs into SAFe at Vodafone. He trained more than 600 people across Europe in Agile and SAFe. He also transformed a 300-person IT department for an East Coast electricity company in the USA. Diego mentored recently promoted RTEs to help them settle into their roles smoothly.',
       companies: [
-        { name: 'Capital One', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/capital-one-logo.svg' },
-        { name: 'Applied Frameworks', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/applied-frameworks-logo.svg' }
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/CAPGEMINI_BG_2_01_3847275ea6.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Accenture_BG_2_363970d890.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Allianz_logo_BG_2_2382ef1ded.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Babel_logo_BG_2_476a2503aa.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cvs_LOGO_BG_2_2959e975b7.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/COLSA_BG_12_9fc1e07335.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/ibm_bg_2_47fde7cddb.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cigna_bg_2_443af3527a.webp' ,
       ]
     },
     {
       id: 2,
-      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png',
-      name: 'David Rodriguez',
-      title: 'SAFe® Practice Consultant (SPC®), Agile Coach',
-      experience: '30 yrs',
-      students: '9,000 +',
-      certificationImage: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm-badge.svg',
-      moreCertifications: '+1 more',
-      descriptionShort: 'An industry leader in Agile methodologies with over three decades of experience. David has facilitated <strong>35+ enterprise transformations</strong>, trained <strong>35,000+ professionals</strong>, and coached <strong>350+ teams</strong> to achieve exceptional agility. He is dedicated to...',
-      descriptionFull: '<p>An industry leader in Agile methodologies with over three decades of experience. David has facilitated <strong>35+ enterprise transformations</strong>, trained <strong>35,000+ professionals</strong>, and coached <strong>350+ teams</strong> to achieve exceptional agility.</p><p>His expertise spans multiple industries, and he has been instrumental in transforming organizations to achieve business agility at scale.</p>',
+      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Untitled_design_1_39f0010ae0.png',
+      name: 'Yuval Yeret',
+      title: 'SAFe® Practice Consultant Trainer (SPCT®), Enterprise Transformation Coach',
+      experience: '20+ yrs',
+      students: '400 +',
+      certificationImage: [
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SPCT_Logo_61460e12d5.svg',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SA_badge_8a29fd2d9a.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SSM_png_cc996507ab.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/LPM_WEB_f5b1e1e899.webp','https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm_ai_379c28dfda.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/AI_rte_logo_45fb161b81.png'
+      ],
+      descriptionShort: 'A seasoned Agile coach specializing in large-scale transformations. James has led <strong>28+ SAFe implementations</strong>, trained <strong>28,000+ professionals</strong>, and mentored <strong>280+ teams</strong> to success. His approach emphasizes...',
+      descriptionFull: '<p>A seasoned Agile coach specializing in large-scale transformations. James has led <strong>28+ SAFe implementations</strong>, trained <strong>28,000+ professionals</strong>, and mentored <strong>280+ teams</strong> to success.</p><p>His approach emphasizes practical implementation and sustainable change, making him a sought-after consultant for organizations undergoing digital transformation.</p>',
       companies: [
-        { name: 'Capital One', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/capital-one-logo.svg' },
-        { name: 'Applied Frameworks', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/applied-frameworks-logo.svg' }
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/CAPGEMINI_BG_2_01_3847275ea6.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Accenture_BG_2_363970d890.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Allianz_logo_BG_2_2382ef1ded.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Babel_logo_BG_2_476a2503aa.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cvs_LOGO_BG_2_2959e975b7.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/COLSA_BG_12_9fc1e07335.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/ibm_bg_2_47fde7cddb.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cigna_bg_2_443af3527a.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/honey_well_bg_2_6a588fa308.webp' ,
       ]
     },
     {
       id: 3,
-      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png',
-      name: 'James Wilson',
-      title: 'SAFe® Practice Consultant (SPC®), Agile Coach',
-      experience: '28 yrs',
-      students: '7,500 +',
-      certificationImage: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm-badge.svg',
-      moreCertifications: '+1 more',
-      descriptionShort: 'A seasoned Agile coach specializing in large-scale transformations. James has led <strong>28+ SAFe implementations</strong>, trained <strong>28,000+ professionals</strong>, and mentored <strong>280+ teams</strong> to success. His approach emphasizes...',
-      descriptionFull: '<p>A seasoned Agile coach specializing in large-scale transformations. James has led <strong>28+ SAFe implementations</strong>, trained <strong>28,000+ professionals</strong>, and mentored <strong>280+ teams</strong> to success.</p><p>His approach emphasizes practical implementation and sustainable change, making him a sought-after consultant for organizations undergoing digital transformation.</p>',
+      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/John_SPC_a2f6b9ac1d_94e32f579e.png',
+      name: 'John Nichols',
+      title: 'SAFe® Practice Consultant (SPC®) & Lean Agile Coach',
+      experience: 'Decade of',
+      students: '600 +',
+      certificationImage: [
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SPCT_Logo_61460e12d5.svg',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/LPM_NEW_55af2772b2.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/AI_rte_logo_45fb161b81.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SSM_png_cc996507ab.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SSM_png_cc996507ab.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/pmp_600px_9cdb2e6d4f.png' ,
+
+      ],
+      descriptionShort: 'John is a Certified SAFe Practice Consultant and Lean Agile Coach based in Northern Virginia with over a decade of experience in driving technical solution delivery and guiding agile transformations. Dedicated to embodying a lean-agile mindset, he excels in aligning efforts with organizational strategy and fostering a culture of continuous improvement and collaboration. Successfully implementing SAFe in the federal space, hes navigated complex challenges by tailoring configurations to meet customer needs while ensuring high-quality standards across initiatives.',
+      descriptionFull: 'John is a Certified SAFe Practice Consultant and Lean Agile Coach based in Northern Virginia with over a decade of experience in driving technical solution delivery and guiding agile transformations. Dedicated to embodying a lean-agile mindset, he excels in aligning efforts with organizational strategy and fostering a culture of continuous improvement and collaboration. Successfully implementing SAFe in the federal space, hes navigated complex challenges by tailoring configurations to meet customer needs while ensuring high-quality standards across initiatives.'
+
+,
       companies: [
-        { name: 'Capital One', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/capital-one-logo.svg' },
-        { name: 'Applied Frameworks', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/applied-frameworks-logo.svg' }
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/United_States_Census_1_4411665530.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/logo_2_57fad911a0.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Logo3_99fd25480f.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Logo_4_1483dec4a5.png' ,
       ]
     },
     {
       id: 4,
-      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png',
-      name: 'Robert Taylor',
-      title: 'SAFe® Practice Consultant (SPC®), Agile Coach',
-      experience: '32 yrs',
-      students: '10,000 +',
-      certificationImage: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm-badge.svg',
-      moreCertifications: '+1 more',
-      descriptionShort: 'A visionary in Agile transformation with a proven track record. Robert has executed <strong>32+ enterprise transformations</strong>, educated <strong>32,000+ professionals</strong>, and empowered <strong>320+ teams</strong> to reach new heights. He is committed to...',
-      descriptionFull: '<p>A visionary in Agile transformation with a proven track record. Robert has executed <strong>32+ enterprise transformations</strong>, educated <strong>32,000+ professionals</strong>, and empowered <strong>320+ teams</strong> to reach new heights.</p><p>His innovative approaches and deep industry knowledge have made him a trusted advisor for leading organizations worldwide.</p>',
-      companies: [
-        { name: 'Capital One', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/capital-one-logo.svg' },
-        { name: 'Applied Frameworks', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/applied-frameworks-logo.svg' }
-      ]
-    },
-    {
-      id: 5,
-      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png',
-      name: 'William Anderson',
-      title: 'SAFe® Practice Consultant (SPC®), Agile Coach',
+      image: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Untitled_design_3_4cd3e7cc50.png',
+      name: 'Hanna Hawthorn',
+      title: 'SAFe® Practice Consultant (SPC®), Agile coach',
       experience: '27 yrs',
       students: '6,800 +',
-      certificationImage: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm-badge.svg',
-      moreCertifications: '+1 more',
-      descriptionShort: 'An accomplished Agile leader with expertise in enterprise transformations. William has managed <strong>27+ large-scale implementations</strong>, trained <strong>27,000+ professionals</strong>, and guided <strong>270+ teams</strong> to excellence. He strives to...',
-      descriptionFull: '<p>An accomplished Agile leader with expertise in enterprise transformations. William has managed <strong>27+ large-scale implementations</strong>, trained <strong>27,000+ professionals</strong>, and guided <strong>270+ teams</strong> to excellence.</p><p>His practical experience and strategic insights help organizations achieve sustainable Agile transformations that deliver real business value.</p>',
+      certificationImage: [
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SA_badge_8a29fd2d9a.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/spc_web_9daf23d6e2.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/SSM_png_cc996507ab.png' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/LPM_WEB_f5b1e1e899.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/popm_ai_379c28dfda.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/pmp_600px_9cdb2e6d4f.png',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Disciplined_Agile_Senior_Scrum_Maste_R_Badge_299d339d14.png',
+      ],
+      descriptionShort: 'Hanna is a SAFe Practice Consultant (SPC) and Professional Certified Coach (PCC) with over 14 years of experience transforming organizations through agile adoption and leadership development. She brings real-world expertise from Fortune 500 engagements with Google, Bloomberg, Facebook, and Lululemon. Hanna specializes in helping leaders and teams navigate complex transformations while building psychologically safe, high-performing cultures. Her approach goes beyond framework implementation to address the human side of change—ensuring that agile adoptions not only succeed technically but create sustainable, thriving work environments. Drawing from her background in Management Information Systems and Organizational Behaviour, along with certifications in Solution-Focused Coaching and Emotional Intelligence, Hanna creates learning experiences that resonate with both analytical and people-focused professionals. She is passionate about empowering leaders to drive meaningful change through authentic, results-driven agile practices.',
+      descriptionFull: 'Hanna is a SAFe Practice Consultant (SPC) and Professional Certified Coach (PCC) with over 14 years of experience transforming organizations through agile adoption and leadership development. She brings real-world expertise from Fortune 500 engagements with Google, Bloomberg, Facebook, and Lululemon. Hanna specializes in helping leaders and teams navigate complex transformations while building psychologically safe, high-performing cultures. Her approach goes beyond framework implementation to address the human side of change—ensuring that agile adoptions not only succeed technically but create sustainable, thriving work environments.',
       companies: [
-        { name: 'Capital One', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/capital-one-logo.svg' },
-        { name: 'Applied Frameworks', logo: 'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/applied-frameworks-logo.svg' }
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/CAPGEMINI_BG_2_01_3847275ea6.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Allianz_logo_BG_2_2382ef1ded.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Babel_logo_BG_2_476a2503aa.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cvs_LOGO_BG_2_2959e975b7.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/COLSA_BG_12_9fc1e07335.webp',
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/ibm_bg_2_47fde7cddb.webp' ,
+        'https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/cigna_bg_2_443af3527a.webp',
       ]
     }
   ];
@@ -693,7 +739,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const statNumbers = document.querySelectorAll('.stat-number');
     const certificationBadgesContainer = document.getElementById('certificationBadges');
     const descriptionFull = document.querySelector('.description-full');
-    const companyLogos = document.querySelectorAll('.company-logo img');
+    const companyLogosContainer = document.querySelector('.company-logos');
     
     // Update profile image
     if (profileImage) {
@@ -722,13 +768,23 @@ document.addEventListener('DOMContentLoaded', function() {
       // Clear existing badges
       certificationBadgesContainer.innerHTML = '';
       
-      // Create array of certification badges (can be extended to use instructor.certifications array)
-      const certifications = instructor.certifications || [];
+      // Create array of certification badges
+      let certifications = [];
       
-      // If no certifications array, use single certificationImage as fallback
-      if (certifications.length === 0 && instructor.certificationImage) {
-        certifications.push({ image: instructor.certificationImage, alt: 'Certification Badge' });
-    }
+      // Check for certifications array first
+      if (instructor.certifications && Array.isArray(instructor.certifications)) {
+        certifications = instructor.certifications;
+      }
+      // If no certifications array, use certificationImage array
+      else if (instructor.certificationImage) {
+        // Handle both array and single string for backward compatibility
+        if (Array.isArray(instructor.certificationImage)) {
+          certifications = instructor.certificationImage.map(img => ({ image: img, alt: 'Certification Badge' }));
+        } else {
+          // Legacy: single string
+          certifications = [{ image: instructor.certificationImage, alt: 'Certification Badge' }];
+        }
+      }
     
       // Render all certification badges
       certifications.forEach((cert, index) => {
@@ -747,12 +803,34 @@ document.addEventListener('DOMContentLoaded', function() {
       descriptionFull.innerHTML = instructor.descriptionFull || instructor.descriptionShort;
     }
     
-    // Update company logos
-    if (companyLogos && instructor.companies) {
-      companyLogos.forEach((logo, index) => {
-        if (instructor.companies[index]) {
-          logo.src = instructor.companies[index].logo;
-          logo.alt = instructor.companies[index].name;
+    // Update company logos - dynamically create elements for all companies
+    if (companyLogosContainer && instructor.companies) {
+      // Clear existing logos
+      companyLogosContainer.innerHTML = '';
+      
+      // Create logo elements for all companies
+      instructor.companies.forEach((company, index) => {
+        // Handle both array of URLs and array of objects for backward compatibility
+        let logoUrl = '';
+        let altText = `Company ${index + 1}`;
+        
+        if (typeof company === 'string') {
+          // Simple array of URLs
+          logoUrl = company;
+        } else if (company.logo) {
+          // Legacy: array of objects
+          logoUrl = company.logo;
+          altText = company.name || altText;
+        }
+        
+        if (logoUrl) {
+          const logoDiv = document.createElement('div');
+          logoDiv.className = 'company-logo';
+          const img = document.createElement('img');
+          img.src = logoUrl;
+          img.alt = altText;
+          logoDiv.appendChild(img);
+          companyLogosContainer.appendChild(logoDiv);
         }
       });
     }
@@ -1048,24 +1126,89 @@ function initFloatingCTA(){
     expandIcon.addEventListener('click', ()=> root.classList.add('expanded'));
   }
 
-  // Scroll-based visibility: hide floating section when next-session-card is in view
-  const nextSessionCard = document.querySelector('.next-session-card');
-  if (nextSessionCard && 'IntersectionObserver' in window) {
+  // Helper function to check if device is desktop (width > 1024px)
+  const isDesktop = () => window.innerWidth > 1024;
+
+  // Scroll-based visibility: hide floating section when course section is in view
+  const courseSection = document.querySelector('.course-display-google-landing');
+  if (courseSection && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        // Only show on desktop devices
+        if (!isDesktop()) {
+          root.style.setProperty('display', 'none', 'important');
+          return;
+        }
+
+        // Check if floating CTA has date data before showing
+        const floatingCtaDate = root.querySelector('.floating-cta-date');
+        const hasDateData = floatingCtaDate && floatingCtaDate.textContent.trim();
+        
         if (entry.isIntersecting) {
-          // Section is in view - hide floating section
-          root.style.display = 'none';
+          // Course section is in view - hide floating section
+          root.style.setProperty('display', 'none', 'important');
         } else {
-          // Section is out of view - show floating section
-          root.style.display = '';
+          // Course section is out of view - show floating section only if date data exists
+          if (hasDateData) {
+            root.style.setProperty('display', 'block', 'important');
+          } else {
+            root.style.setProperty('display', 'none', 'important');
+          }
         }
       });
     }, {
-      threshold: 0.1 // Trigger when 10% of the section is visible
+      threshold: 0.1, // Trigger when 10% of the section is visible
+      rootMargin: '0px' // No margin offset
     });
     
-    observer.observe(nextSessionCard);
+    observer.observe(courseSection);
+    
+    // Initial check: if course section is in view on page load, hide floating CTA
+    const checkInitialState = () => {
+      // Only show on desktop devices
+      if (!isDesktop()) {
+        root.style.setProperty('display', 'none', 'important');
+        return;
+      }
+
+      const rect = courseSection.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      const floatingCtaDate = root.querySelector('.floating-cta-date');
+      const hasDateData = floatingCtaDate && floatingCtaDate.textContent.trim();
+      
+      if (isInView) {
+        // Course section is in view - hide floating CTA
+        root.style.setProperty('display', 'none', 'important');
+      } else if (hasDateData) {
+        // Course section is out of view and has data - show floating CTA
+        root.style.setProperty('display', 'block', 'important');
+      } else {
+        // No data yet - keep hidden
+        root.style.setProperty('display', 'none', 'important');
+      }
+    };
+    
+    // Check after DOM is ready and after a short delay to ensure layout is calculated
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(checkInitialState, 200);
+      });
+    } else {
+      setTimeout(checkInitialState, 200);
+    }
+
+    // Handle window resize to hide/show based on screen size
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if (!isDesktop()) {
+          root.style.setProperty('display', 'none', 'important');
+        } else {
+          checkInitialState();
+        }
+      }, 100);
+    });
   }
 }
 
@@ -1775,10 +1918,28 @@ individualCard.addEventListener('click', function() {
     if (this.classList.contains('individual-org-benefits-collapsed')) {
         const isDesktop = window.innerWidth > 1100;
         const expandedState = this.querySelector('.individual-org-benefits-expanded-state');
+        const collapsedState = this.querySelector('.individual-org-benefits-collapsed-state');
+        const otherExpandedState = organizationalCard.querySelector('.individual-org-benefits-expanded-state');
+        const otherCollapsedState = organizationalCard.querySelector('.individual-org-benefits-collapsed-state');
         
-        // Only hide text on desktop (not mobile/tablet)
+        // Hide collapsed state immediately to prevent background flash
+        if (collapsedState) {
+            collapsedState.style.display = 'none';
+        }
+        
+        // Hide expanded state initially (desktop only)
         if (isDesktop && expandedState) {
             expandedState.style.display = 'none';
+        }
+        
+        // Hide the other card's expanded state immediately (desktop only)
+        if (isDesktop && otherExpandedState) {
+            otherExpandedState.style.display = 'none';
+        }
+        
+        // Show other card's collapsed state
+        if (otherCollapsedState) {
+            otherCollapsedState.style.display = 'flex';
         }
         
         // Expand left, collapse right
@@ -1786,14 +1947,6 @@ individualCard.addEventListener('click', function() {
         this.classList.add('individual-org-benefits-expanded');
         organizationalCard.classList.remove('individual-org-benefits-expanded');
         organizationalCard.classList.add('individual-org-benefits-collapsed');
-        
-        // Hide the other card's expanded state immediately (desktop only)
-        if (isDesktop) {
-            const otherExpandedState = organizationalCard.querySelector('.individual-org-benefits-expanded-state');
-            if (otherExpandedState) {
-                otherExpandedState.style.display = 'none';
-            }
-        }
         
         // Show text instantly after flex-basis animation completes (0.4s) - desktop only
         if (isDesktop && expandedState) {
@@ -1811,10 +1964,28 @@ organizationalCard.addEventListener('click', function() {
     if (this.classList.contains('individual-org-benefits-collapsed')) {
         const isDesktop = window.innerWidth > 1100;
         const expandedState = this.querySelector('.individual-org-benefits-expanded-state');
+        const collapsedState = this.querySelector('.individual-org-benefits-collapsed-state');
+        const otherExpandedState = individualCard.querySelector('.individual-org-benefits-expanded-state');
+        const otherCollapsedState = individualCard.querySelector('.individual-org-benefits-collapsed-state');
         
-        // Only hide text on desktop (not mobile/tablet)
+        // Hide collapsed state immediately to prevent background flash
+        if (collapsedState) {
+            collapsedState.style.display = 'none';
+        }
+        
+        // Hide expanded state initially (desktop only)
         if (isDesktop && expandedState) {
             expandedState.style.display = 'none';
+        }
+        
+        // Hide the other card's expanded state immediately (desktop only)
+        if (isDesktop && otherExpandedState) {
+            otherExpandedState.style.display = 'none';
+        }
+        
+        // Show other card's collapsed state
+        if (otherCollapsedState) {
+            otherCollapsedState.style.display = 'flex';
         }
         
         // Expand right, collapse left
@@ -1822,14 +1993,6 @@ organizationalCard.addEventListener('click', function() {
         this.classList.add('individual-org-benefits-expanded');
         individualCard.classList.remove('individual-org-benefits-expanded');
         individualCard.classList.add('individual-org-benefits-collapsed');
-        
-        // Hide the other card's expanded state immediately (desktop only)
-        if (isDesktop) {
-            const otherExpandedState = individualCard.querySelector('.individual-org-benefits-expanded-state');
-            if (otherExpandedState) {
-                otherExpandedState.style.display = 'none';
-            }
-        }
         
         // Show text instantly after flex-basis animation completes (0.4s) - desktop only
         if (isDesktop && expandedState) {
@@ -1846,25 +2009,25 @@ const topNavbarTestimonials = [
   {
     name: "Shannon Hodous",
     text: "The class and instructor were wonderful. The context was thorough and the layout of the course was engaging! Looking forward to my next class on SAFe.",
-    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg",
+    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_28_234811_43940bd917.png",
     icon: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_300221_cbfa763804.svg"
   },
   {
-    name: "Arnaud Moinard",
-    text: "This training was amazing. The appropriate information was sent before the training and the session itself was very interesting with lots of practice, the right amount of theory and very skillful trainer.",
-    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg",
+    name: "Raisa Betta",
+    text: "Knowledgeable and engaging. Trainer offered real world examples along with continuing education resources. I would not hesitate to sign up for another class. Thank you!",
+    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_28_235539_7cf388a40c.png",
     icon: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
   },
   {
-    name: "Craig Hicks",
-    text: "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for small group discussion and collaborative problem-solving. The Program Increment Planning simulation was especially helpful and has deepened my understanding of how Agile methods scale from teams to release train.",
-    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_2_9969980637.svg",
+    name: "Liljana Cvetkovska",
+    text: "Informative, interactive, enjoyable and well run course. Instructor's long years of professional experience was enriching.",
+    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_28_235552_3a24f4614b.png",
     icon: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Group_29_d7e93f04ba.svg"
   },
   {
-    name: "Katie Miller",
-    text: "High praise for Skillbook. The course was fantastic. I feel much more equipped to engage in conversations around Agile but also have a deep appreciation for the philosophy behind the methodology.",
-    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg",
+    name: "Becky Courington",
+    text: "The SAFe certification class I took at Skillbook was very well organized and incredibly informative. Communication leading up to the class was excellent.",
+    image: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_28_235615_0dbc6bd8fb.png",
     icon: "https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_300221_cbfa763804.svg"
   }
 ];

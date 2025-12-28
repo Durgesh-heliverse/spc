@@ -174,6 +174,84 @@
     border: 1px solid #f5c6cb;
     display: block;
   }
+
+  /* Loading Skeleton Styles */
+  .loading-skeleton-text {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    border-radius: 4px;
+    color: transparent !important;
+    min-height: 1em;
+    display: inline-block;
+    min-width: 60px;
+  }
+
+  .loading-skeleton-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .loading-skeleton-button {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%) !important;
+    background-size: 200% 100% !important;
+    animation: loading 1.5s ease-in-out infinite;
+    border: none !important;
+    color: transparent !important;
+    min-width: 100px;
+    min-height: 44px;
+  }
+
+  .loading-skeleton-line {
+    height: 16px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .loading-skeleton-line.short {
+    width: 60%;
+  }
+
+  .loading-skeleton-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .course-schedule-loading {
+    width: 100%;
+  }
+
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Hide loading skeletons when data is loaded */
+  .next-session-card:not(.loading) .loading-skeleton-text,
+  .next-session-card:not(.loading) .loading-skeleton-circle,
+  .next-session-card:not(.loading) .loading-skeleton-button {
+    animation: none;
+    background: transparent;
+  }
+
+  .course-schedule-loading.hidden {
+    display: none;
+  }
 </style>
 </head>
 
@@ -274,31 +352,27 @@
       </div>
 
       <div class="course-display-2-flex">
-        <div class="next-session-card" id="nextSessionCard" style="display: none;">
+        <div class="next-session-card loading" id="nextSessionCard">
           <div class="ns-header">NEXT UPCOMING SESSION</div>
           <div class="ns-body">
             <div class="ns-date">
-              <div class="ns-month">AUG</div>
+              <div class="ns-month loading-skeleton-text"></div>
               <div class="ns-day-wrap">
-                <div class="ns-days">24-25</div>
-                <div class="ns-week">Sat - Sun</div>
+                <div class="ns-days loading-skeleton-text"></div>
+                <div class="ns-week loading-skeleton-text"></div>
               </div>
             </div>
 
             <div class="ns-info">
-              <div class="ns-time"></div>
+              <div class="ns-time loading-skeleton-text"></div>
               <div class="ns-trainers">
                 <div class="ns-trainer">
-                  <img
-                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/a_dp_of_random_person_58fdc93ec2.svg"
-                    alt="" />
-                  <span>Harry Narang</span>
+                  <div class="loading-skeleton-circle"></div>
+                  <span class="loading-skeleton-text"></span>
                 </div>
                 <div class="ns-trainer">
-                  <img
-                    src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/a_dp_of_random_person_1_ffda3f1bd7.svg"
-                    alt="" />
-                  <span>Joe Callahan</span>
+                  <div class="loading-skeleton-circle"></div>
+                  <span class="loading-skeleton-text"></span>
                 </div>
               </div>
 
@@ -307,13 +381,11 @@
 
 
           <div class="ns-actions">
-            <button class="ns-btn ns-btn-primary">
-              Register
-              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/fi_507257_2_1aec358d9a.svg" alt="">
+            <button class="ns-btn ns-btn-primary loading-skeleton-button">
+              <span class="loading-skeleton-text"></span>
             </button>
-            <button class="ns-btn ns-btn-ghost" onclick="scrollToCourseShow()">
-              View all dates
-              <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Layer_93_6da3d19c24.svg" alt="">
+            <button class="ns-btn ns-btn-ghost loading-skeleton-button" onclick="scrollToCourseShow()">
+              <span class="loading-skeleton-text"></span>
             </button>
           </div>
 
@@ -324,14 +396,30 @@
   </div>
 
 
-  <div id="course-schedule" class="showing-spc-highlights-widget-main-courses" style="display: none;">
-
+  <div id="course-schedule" class="showing-spc-highlights-widget-main-courses">
+    <div class="course-schedule-loading">
+      <div class="loading-skeleton-card">
+        <div class="loading-skeleton-line"></div>
+        <div class="loading-skeleton-line"></div>
+        <div class="loading-skeleton-line short"></div>
+      </div>
+      <div class="loading-skeleton-card">
+        <div class="loading-skeleton-line"></div>
+        <div class="loading-skeleton-line"></div>
+        <div class="loading-skeleton-line short"></div>
+      </div>
+      <div class="loading-skeleton-card">
+        <div class="loading-skeleton-line"></div>
+        <div class="loading-skeleton-line"></div>
+        <div class="loading-skeleton-line short"></div>
+      </div>
+    </div>
   </div>
 
   </div>
 
   <!-- Floating Date Widget Container (sticky bottom when main section is out of view) -->
-  <div class="spc-date-widget-main-course-floating-container-sec-main-wrapper">
+  <div class="spc-date-widget-main-course-floating-container-sec-main-wrapper" style="display: none;">
     <div class="spc-date-widget-main-course-floating-container-sec" style="display: none;">
       <div class="fsc-header">SELECTED DATE</div>
       <div class="fsc-body">
@@ -651,7 +739,7 @@
               <p>Our instructor did a fantastic job in the Leading SAFe certification program. It did not even seem to matter that it had to be a virtual class because of the current crisis. The class was very engaging and it was clear from minute 1 that we had a highly competent teacher in our midst. Those two days flew by and there was not a single time that any of us in that class was restless. He has us fully engaged and truly learning. I feel very fortunate to have been in that class. Many thanks also to Skillbook Academy for being so responsive and patient with all my concerns prior to the class.</p>
               <button class="oss-read-more">Read More</button>
               <div class="oss-author">
-                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_000050_8e7db14b05.png"
                   alt="author">
                 <span>Jackie Duerr</span>
                 <span class="oss-rating">⭐ 5/5</span>
@@ -749,7 +837,7 @@
               <p>I had preconceived ideas about Scrum but wanted to learn more. WOW I had no idea how much Scrum/Agile philosophy meshes with my normal leadership style. I'm excited about the future leading and advocating for true Scrum environments. Amazing experience all around and I highly recommend it for anyone looking to become a Scrum Master or just looking for more information.</p>
               <button class="oss-read-more">Read More</button>
               <div class="oss-author">
-                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_000119_d686db05a2.png"
                   alt="author">
                 <span>Baumer Tom</span>
                 <span class="oss-rating">⭐ 5/5</span>
@@ -813,7 +901,7 @@
                 <p>Our instructor did a fantastic job in the Leading SAFe certification program. It did not even seem to matter that it had to be a virtual class because of the current crisis. The class was very engaging and it was clear from minute 1 that we had a highly competent teacher in our midst. Those two days flew by and there was not a single time that any of us in that class was restless. He has us fully engaged and truly learning. I feel very fortunate to have been in that class. Many thanks also to Skillbook Academy for being so responsive and patient with all my concerns prior to the class.</p>
                 <button class="oss-read-more">Read More</button>
                 <div class="oss-author">
-                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_000050_8e7db14b05.png"
                     alt="author">
                   <span>Jackie Duerr</span>
                   <span class="oss-rating">⭐ 5/5</span>
@@ -906,7 +994,7 @@
                 <p>I had preconceived ideas about Scrum but wanted to learn more. WOW I had no idea how much Scrum/Agile philosophy meshes with my normal leadership style. I'm excited about the future leading and advocating for true Scrum environments. Amazing experience all around and I highly recommend it for anyone looking to become a Scrum Master or just looking for more information.</p>
                 <button class="oss-read-more">Read More</button>
                 <div class="oss-author">
-                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                  <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_000119_d686db05a2.png"
                     alt="author">
                   <span>Baumer Tom</span>
                   <span class="oss-rating">⭐ 5/5</span>
@@ -954,7 +1042,7 @@
     <!-- What Participants Say About You Section -->
 
       <!-- Floating Schedules CTA (collapsed/expanded) -->
-      <section id="floating-cta" class="floating-cta expanded" aria-live="polite">
+      <section id="floating-cta" class="floating-cta expanded" aria-live="polite" style="display: none;">
         <div class="floating-cta-card">
           <button class="floating-cta-close" aria-label="Close">
             <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484233_1_2bcba7524e.svg" alt="close">
@@ -1025,7 +1113,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001011_1b5cec6c6b.png"
                       alt="Teresa Williams" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Teresa Williams</span>
                   </div>
@@ -1050,7 +1138,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001049_b822b53283.png"
                       alt="Alexandra Khan" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Alexandra Khan</span>
                   </div>
@@ -1075,7 +1163,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_2_9969980637.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001541_be5c779ddb.png"
                       alt="Saravana I" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Saravana I</span>
                   </div>
@@ -1099,7 +1187,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001221_328c1d58cf.png"
                       alt="Monet Duval" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Monet Duval</span>
                   </div>
@@ -1124,7 +1212,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_1_3de4552e39.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001234_add2dc527b.png"
                       alt="Nuwan Waas" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Nuwan Waas</span>
                   </div>
@@ -1149,7 +1237,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_2_9969980637.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001244_e054be166f.png"
                       alt="Mihai Ilies" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Mihai Ilies</span>
                   </div>
@@ -1174,7 +1262,7 @@
                 </div>
                 <div class="what-participants-say-about-you-footer">
                   <div class="what-participants-say-about-you-author-info">
-                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1438_b4ac44c9db.svg"
+                    <img src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Screenshot_2025_12_29_001257_91703d87eb.png"
                       alt="Michael Swafford" class="what-participants-say-about-you-author-image">
                     <span class="what-participants-say-about-you-author-name">Michael Swafford</span>
                   </div>
@@ -1252,7 +1340,8 @@
               <!-- Collapsed State -->
               <div class="individual-org-benefits-collapsed-state">
                 <h2 class="individual-org-benefits-heading">Individual Benefits</h2>
-                <div class="individual-org-benefits-arrow">
+               
+                <div class="individual-org-benefits-arrow-left">
                   <img
                     src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_1_b2f6892af6.svg"
                     alt="">
@@ -1340,7 +1429,8 @@
               <!-- Collapsed State -->
               <div class="individual-org-benefits-collapsed-state">
                 <h2 class="individual-org-benefits-heading">Organizational Benefits</h2>
-                <div class="individual-org-benefits-arrow-left">
+                
+                <div class="individual-org-benefits-arrow">
                   <img
                     src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/Frame_1707484096_1_b2f6892af6.svg"
                     alt="">
@@ -2563,39 +2653,32 @@ While no prior experience is mandatory, the following background is highly recom
               <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="0">
                 <img class="meet-the-agile-leaders-instructors-carousel-item-image"
                   src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
-                  alt="John Hammond">
-                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">John Hammond</h3>
+                  alt="Michael Callahan">
+                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">Michael Callahan</h3>
               </div>
 
               <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="1">
-                <img class="meet-the-agile-leaders-instructors-carousel-item-image"
-                  src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
-                  alt="Michael Chen">
-                <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">Michael Chen</h3>
-              </div>
-
-              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="2">
                 <img class="meet-the-agile-leaders-instructors-carousel-item-image"
                   src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
                   alt="David Rodriguez">
                 <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">David Rodriguez</h3>
               </div>
 
-              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="3">
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="2">
                 <img class="meet-the-agile-leaders-instructors-carousel-item-image"
                   src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
                   alt="James Wilson">
                 <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">James Wilson</h3>
               </div>
 
-              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="4">
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="3">
                 <img class="meet-the-agile-leaders-instructors-carousel-item-image"
                   src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
                   alt="Robert Taylor">
                 <h3 class="meet-the-agile-leaders-instructors-carousel-item-title">Robert Taylor</h3>
               </div>
 
-              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="5">
+              <div class="meet-the-agile-leaders-instructors-carousel-item" data-slide="4">
                 <img class="meet-the-agile-leaders-instructors-carousel-item-image"
                   src="https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/image_1442_2150cdb87a.png"
                   alt="William Anderson">

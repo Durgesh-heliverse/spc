@@ -429,9 +429,15 @@ async function getCourseByCity(slug) {
         floatingCta.style.setProperty('display', 'none', 'important');
       }
     } else {
-      // Show floating CTA only when no classid AND section is hidden
+      // Show floating CTA only when no classid AND section is hidden AND data is available
       if (floatingCta) {
-        floatingCta.style.removeProperty('display');
+        const floatingCtaDate = floatingCta.querySelector('.floating-cta-date');
+        // Only show if date data is populated
+        if (floatingCtaDate && floatingCtaDate.textContent.trim()) {
+          floatingCta.style.setProperty('display', 'block', 'important');
+        } else {
+          floatingCta.style.setProperty('display', 'none', 'important');
+        }
       }
     }
 
@@ -966,6 +972,17 @@ async function getCourseByCity(slug) {
     // Populate mobile/tablet floating section (pass the dateBoxHTMLMobile for expanded view)
     populateMobileFloatingSection(event, monthLabel, startDay, endDay, startDayName, endDayName, duration, timeText, code, dateBoxHTMLMobile, learnMoreCoach, readMoreCoach, infoListCard);
 
+    // Hide loading skeleton when data is rendered
+    const courseScheduleLoading = container.querySelector('.course-schedule-loading');
+    if (courseScheduleLoading) {
+      courseScheduleLoading.classList.add('hidden');
+    }
+
+    // Insert the HTML into the container
+    if (container) {
+      container.innerHTML = dateBoxHTML;
+    }
+
     // Add IntersectionObserver to show/hide floating container
     setupFloatingContainerObserver(container);
 
@@ -1138,6 +1155,12 @@ async function getCourseByCity(slug) {
             });
           }
         });
+      }
+
+      // Show the wrapper when data is populated
+      const floatingWrapper = document.querySelector('.spc-date-widget-main-course-floating-container-sec-main-wrapper');
+      if (floatingWrapper && monthLabel && startDay) {
+        floatingWrapper.style.setProperty('display', 'block', 'important');
       }
     }
 

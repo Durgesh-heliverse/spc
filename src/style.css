@@ -15,6 +15,9 @@ body {
   position: relative;
 }
  
+/* .qvJS6rl_Bt7dh5RNGpR3{
+  display: none !important;
+} */
 
 /* top - navbar ---------- */
 
@@ -2700,13 +2703,14 @@ letter-spacing: 0%;
   content: '';
   position: absolute;
   top: 3px;
-  right: 20px;
+  right: 12px;
   width: 20px;
   height: 20px;
   background-image: url('https://skillbook-cms-prod-latest.s3.us-east-1.amazonaws.com/x0020_1_d1fdc3c997.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  filter: brightness(0) invert(1);
   z-index: 10;
 }
 
@@ -3017,8 +3021,8 @@ letter-spacing: 0%;
 }
 
 .company-logo {
-  height: 36px;
-  width: 100px;
+  height: auto;
+  width: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3049,12 +3053,13 @@ letter-spacing: 0%;
 }
 
 .certification-badges .certification-badge {
-  width: 30px;
-  height: auto;
+  width: auto;
+  height: 50px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 
 .certification-badges .certification-badge img {
@@ -3158,9 +3163,10 @@ letter-spacing: 0%;
 
   .meet-the-agile-leaders-instructors-carousel-item.active::after {
     top: 2px;
-    right: 8px;
+    right: 4px;
     width: 16px;
     height: 16px;
+    filter: brightness(0) invert(1);
     z-index: 15;
   }
 
@@ -3299,6 +3305,11 @@ letter-spacing: 0%;
     object-fit: contain;
   }
 
+  .certification-badges .certification-badge {
+    width: auto;
+    height: 40px;
+  }
+
   .profile-stats > .more-certifications {
     margin-left: 0px;
     font-size: 12px;
@@ -3341,13 +3352,13 @@ letter-spacing: 0%;
 
   .company-logos {
     flex-direction: row;
-    gap: 16px 24px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .company-logo {
-    height: 32px;
-    width: auto;
+    height: auto;
+    width: 50px;
   }
 }
 

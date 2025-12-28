@@ -30,6 +30,7 @@
   right: 60px;
   bottom: 40px;
   z-index: 9998;
+  display: none !important; /* Hidden by default, shown when data is available */
 
 }
 #floating-cta .floating-cta-card {
@@ -889,6 +890,9 @@ s-chip.sub {
   gap: 34px;
   align-items: stretch;
   transition: none;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
   /* border: 1px solid red; */
 }
 
@@ -900,6 +904,8 @@ s-chip.sub {
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), flex-basis 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
 
 .individual-org-benefits-card:hover {
@@ -991,10 +997,14 @@ s-chip.sub {
   text-align: center;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease 0s, visibility 0.3s ease 0s;
+  transition: none;
+  background: white;
+  position: relative;
+  z-index: 2;
 }
 
 .individual-org-benefits-expanded .individual-org-benefits-collapsed-state {
+  display: none !important;
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -1002,6 +1012,7 @@ s-chip.sub {
 }
 
 .individual-org-benefits-collapsed .individual-org-benefits-collapsed-state {
+  display: flex;
   opacity: 1;
   visibility: visible;
   position: relative;
@@ -1025,6 +1036,12 @@ s-chip.sub {
   position: absolute;
   pointer-events: none;
   transition: none;
+  background: white;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
 }
 
 .individual-org-benefits-expanded .individual-org-benefits-expanded-state {
@@ -1034,6 +1051,8 @@ s-chip.sub {
   position: relative;
   pointer-events: auto;
   transition: none;
+  background: white;
+  z-index: 3;
 }
 
 .individual-org-benefits-collapsed .individual-org-benefits-expanded-state {
@@ -1043,6 +1062,7 @@ s-chip.sub {
   position: absolute;
   pointer-events: none;
   transition: none;
+  background: white;
 }
 
 /* Typography */
